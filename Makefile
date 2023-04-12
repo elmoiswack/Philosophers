@@ -7,6 +7,7 @@ SRC	:=	./srcs/main.c \
 		./srcs/arguments_utils.c \
 		./srcs/error_free.c \
 		./srcs/philo_operations.c \
+		./srcs/thread_functions.c \
 
 OBJ := $(SRC:.c=.o)
 

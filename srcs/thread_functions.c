@@ -1,27 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_free.c                                       :+:      :+:    :+:   */
+/*   creating_threads.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/05 13:43:33 by dhussain          #+#    #+#             */
-/*   Updated: 2023/04/12 11:02:47 by dhussain         ###   ########.fr       */
+/*   Created: 2023/04/10 23:16:41 by dhussain          #+#    #+#             */
+/*   Updated: 2023/04/10 23:21:06 by dhussain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
-#include <stdio.h>
-#include <stdlib.h>
+#include "pthread.h"
+#include "stdio.h"
 
-int	error_print(char *str, t_mainstruct *m_struct)
+int	initializing_threads(t_mainstruct *m_struct, char *argv[])
 {
-	free_struct(m_struct);
-	printf("%s\n", str);
-	return (-1);
-}
-
-void	free_struct(t_mainstruct *m_struct)
-{
-	free(m_struct);
+	pthread_t *thread1;
+	
 }
