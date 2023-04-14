@@ -6,7 +6,7 @@
 /*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 10:49:55 by dhussain          #+#    #+#             */
-/*   Updated: 2023/04/12 14:43:28 by dhussain         ###   ########.fr       */
+/*   Updated: 2023/04/14 11:17:50 by dhussain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,27 +36,6 @@ char	*my_strcpy(char *dest, const char *src)
 	}
 	dest[index] = '\0';
 	return (dest);
-}
-
-int	digit_checker(char *str)
-{
-	int	index;
-
-	index = 0;
-	if (str[0] == '\0')
-		return (-1);
-	if (str[0] == '-')
-		return (-1);
-	if (str[0] == '0')
-		return (-1);
-	while (str[index])
-	{
-		if (str[index] >= '0' && str[index] <= '9')
-			index++;
-		else
-			return (-1);
-	}
-	return (1);
 }
 
 int	my_atoi(char *str)

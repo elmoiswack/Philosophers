@@ -6,14 +6,14 @@
 /*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 13:21:38 by dhussain          #+#    #+#             */
-/*   Updated: 2023/04/12 11:47:30 by dhussain         ###   ########.fr       */
+/*   Updated: 2023/04/14 15:32:55 by dhussain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 #include <stdio.h>
 #include <unistd.h>
- #include <stdlib.h>
+#include <stdlib.h>
 
 int	main(int argc, char *argv[])
 {
@@ -30,6 +30,6 @@ int	main(int argc, char *argv[])
 		free_struct(m_struct);
 		return (-1);
 	}
-	printf("woooooow\n\n");
+	initializing_threads(m_struct, argv);
 	return (0);
 }
