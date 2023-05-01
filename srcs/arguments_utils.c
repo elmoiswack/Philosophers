@@ -6,13 +6,14 @@
 /*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 10:49:55 by dhussain          #+#    #+#             */
-/*   Updated: 2023/04/14 11:17:50 by dhussain         ###   ########.fr       */
+/*   Updated: 2023/04/18 15:40:16 by dhussain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 #include <stdio.h>
 #include <unistd.h>
+#include <stdlib.h>
 
 int	my_strlenght(char *str)
 {
@@ -57,4 +58,24 @@ int	my_atoi(char *str)
 		index++;
 	}
 	return (sum);
+}
+
+void	*my_calloc(size_t count, size_t size)
+{
+	char	*ptr;
+	size_t	i;
+	size_t	total;
+
+	total = count * size;
+	ptr = (void *) malloc(total);
+	if (!ptr)
+		return (NULL);
+	i = 0;
+	while (total > 0)
+	{
+		ptr[i] = '\0';
+		i++;
+		total--;
+	}
+	return ((void *)ptr);
 }

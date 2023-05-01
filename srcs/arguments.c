@@ -6,7 +6,7 @@
 /*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 13:33:55 by dhussain          #+#    #+#             */
-/*   Updated: 2023/04/14 13:14:00 by dhussain         ###   ########.fr       */
+/*   Updated: 2023/05/01 10:38:45 by dhussain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,9 @@ int	arg_checker(int argc, char *argv[])
 
 int	filling_struct(char *argv[], t_mainstruct *m_struct)
 {
-	m_struct->number_philo = my_atoi(argv[1]);
+	m_struct->number_of_philo = my_atoi(argv[1]);
+	m_struct->time_to_die = my_atoi(argv[2]);
+	m_struct->time_to_eat = my_atoi(argv[3]);
+	m_struct->time_to_sleep = my_atoi(argv[4]);
 	return (1);
-	
 }

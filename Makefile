@@ -6,14 +6,15 @@ SRC	:=	./srcs/main.c \
 		./srcs/arguments.c \
 		./srcs/arguments_utils.c \
 		./srcs/error_free.c \
+		./srcs/philo_initialize.c \
 		./srcs/philo_operations.c \
-		./srcs/thread_functions.c \
+		./srcs/philo_utils.c \
 
 OBJ := $(SRC:.c=.o)
 
 CC	:=	gcc
 
-CFLAGS	:=	-Wall -Wextra -Werror
+CFLAGS	:=	-Wall -Wextra
 
 all: $(NAME)
 

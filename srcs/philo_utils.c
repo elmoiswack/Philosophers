@@ -1,28 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_free.c                                       :+:      :+:    :+:   */
+/*   philo_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/05 13:43:33 by dhussain          #+#    #+#             */
-/*   Updated: 2023/04/25 13:18:28 by dhussain         ###   ########.fr       */
+/*   Created: 2023/04/27 15:54:56 by dhussain          #+#    #+#             */
+/*   Updated: 2023/05/01 12:33:51 by dhussain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
+#include <sys/time.h>
 #include <stdio.h>
-#include <stdlib.h>
 
-int	error_print(char *str, t_mainstruct *m_struct)
+long	get_time(void)
 {
-	free_struct(m_struct);
-	printf("%s\n", str);
-	return (-1);
-}
+	struct timeval	current_time;
 
-void	free_struct(t_mainstruct *m_struct)
-{
-	free(m_struct->philo_st);
-	free(m_struct);
+	if (gettimeofday(&current_time, NULL) == -1)
+		return (-1);
+	return (current_time.tv_sec * 1000);
 }
