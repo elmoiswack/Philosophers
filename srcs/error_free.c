@@ -6,7 +6,7 @@
 /*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 13:43:33 by dhussain          #+#    #+#             */
-/*   Updated: 2023/04/25 13:18:28 by dhussain         ###   ########.fr       */
+/*   Updated: 2023/05/02 18:17:24 by dhussain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 
 int	error_print(char *str, t_mainstruct *m_struct)
 {
-	free_struct(m_struct);
+	if (m_struct)
+		free_struct(m_struct);
 	printf("%s\n", str);
 	return (-1);
 }

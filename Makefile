@@ -14,7 +14,7 @@ OBJ := $(SRC:.c=.o)
 
 CC	:=	gcc
 
-CFLAGS	:=	-Wall -Wextra
+CFLAGS	:= -Wall -Wextra -Werror
 
 all: $(NAME)
 

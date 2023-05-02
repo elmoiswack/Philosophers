@@ -6,7 +6,7 @@
 /*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 13:21:05 by dhussain          #+#    #+#             */
-/*   Updated: 2023/05/01 13:08:52 by dhussain         ###   ########.fr       */
+/*   Updated: 2023/05/02 16:55:13 by dhussain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,18 @@ typedef struct s_philo_st {
 	long				time_last_eat;
 	long				time_must_eat;
 	int					dead_status;
-	int					thinking_status;
-	int					eating_status;
-	int					sleeping_status;
+	int					has_eaten_status;
 	struct s_mainstruct	*mainstruct;
 }	t_philostatus;
 
 typedef struct s_mainstruct {
 	int					number_of_philo;
 	int					number_of_threads;
-	long				time_start;
 	long				time_to_eat;
 	long				time_to_die;
 	long				time_to_sleep;
+	pthread_t 			*threads;
+	pthread_mutex_t		mutex_lock;
 	struct s_philo_st	*philo_st;
 }	t_mainstruct;
 
@@ -53,7 +52,7 @@ int		error_print(char *str, t_mainstruct *m_struct);
 void	free_struct(t_mainstruct *m_struct);
 
 //Thread functions
-int		initialize_threads(t_mainstruct *m_struct, pthread_t *threads);
+int		initialize_threads(t_mainstruct *m_struct);
 
 //Philo operations
 int		philo_steal_fork(t_philostatus *philo, int philo_id);
@@ -64,5 +63,6 @@ int		philo_died(t_philostatus *philo, int philo_id);
 
 //Utils
 long	get_time(void);
+void	finishing_threads(t_philostatus *philo);
 
 #endif
