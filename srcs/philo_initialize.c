@@ -6,7 +6,7 @@
 /*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:10:47 by dhussain          #+#    #+#             */
-/*   Updated: 2023/05/02 19:30:59 by dhussain         ###   ########.fr       */
+/*   Updated: 2023/05/04 10:53:46 by dhussain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ int		monitoring_philos(t_philostatus *philo)
 	while (1)
 	{
 		philo[index].time_last_eat += get_time();
-		philo_thinking(philo, philo[index].philo_id);
-		if (philo[index].time_last_eat >= philo[index].time_must_eat)
+		if ((philo[index].time_last_eat >= philo[index].time_must_eat) || (philo[index].dead_status == 1))
 			break ;
+		philo_thinking(philo, philo[index].philo_id);
 		if (philo[index].ammount_forks < 2)
 			philo_steal_fork(philo, philo[index].philo_id);
 		if (philo[index].ammount_forks == 2)

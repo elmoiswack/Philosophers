@@ -6,7 +6,7 @@
 /*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 15:14:39 by dhussain          #+#    #+#             */
-/*   Updated: 2023/05/02 19:01:16 by dhussain         ###   ########.fr       */
+/*   Updated: 2023/05/04 10:54:08 by dhussain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	philo_steal_fork(t_philostatus *philo, int philo_id)
 {
 	long	time;
 	
-	if (philo[philo_id - 1].ammount_forks < 1 && philo[philo_id + 1].ammount_forks < 1)
+	if (philo[philo_id - 1].ammount_forks == 0 && philo[philo_id + 1].ammount_forks == 0)
 		return (1);
 	pthread_mutex_lock(&philo->mainstruct->mutex_lock);
 	time = get_time();
@@ -89,7 +89,7 @@ int	philo_died(t_philostatus *philo, int philo_id)
 	if (time == -1)
 		return (-1);
 	printf("%lu %i died\n", time, philo_id);
-	philo->dead_status = 1;
+	philo[philo_id].dead_status = 1;
 	pthread_mutex_unlock(&philo->mainstruct->mutex_lock);
 	return (1);
 }
