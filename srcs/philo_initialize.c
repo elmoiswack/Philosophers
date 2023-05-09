@@ -6,7 +6,7 @@
 /*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:10:47 by dhussain          #+#    #+#             */
-/*   Updated: 2023/05/04 10:53:46 by dhussain         ###   ########.fr       */
+/*   Updated: 2023/05/09 15:20:18 by dhussain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,26 +17,25 @@
 
 int		monitoring_philos(t_philostatus *philo)
 {
-	int		index;
-
-	index = 0;
 	while (1)
 	{
-		philo[index].time_last_eat += get_time();
-		if ((philo[index].time_last_eat >= philo[index].time_must_eat) || (philo[index].dead_status == 1))
+		pthread_mutex_lock(&philo->mainstruct->mutex_lock);
+		philo->time_last_eat += get_time();
+		pthread_mutex_unlock(&philo->mainstruct->mutex_lock);
+		if ((philo->time_last_eat >= philo->time_must_eat) || (philo->dead_status == 1))
 			break ;
-		philo_thinking(philo, philo[index].philo_id);
-		if (philo[index].ammount_forks < 2)
-			philo_steal_fork(philo, philo[index].philo_id);
-		if (philo[index].ammount_forks == 2)
-			philo_eating(philo, philo[index].philo_id);
-		if (philo[index].has_eaten_status == 1)
-			philo_sleeping(philo, philo[index].philo_id);
-		index++;
-		if (index > philo->mainstruct->number_of_philo)
-			index = 0;
+		philo_thinking(philo, philo->philo_id);
+		if (philo->ammount_forks < 2)
+			philo_steal_fork(philo, philo->philo_id);
+		if (philo->ammount_forks == 2)
+			philo_eating(philo, philo->philo_id);
+		if (philo->mainstruct->ammount_of_eating != -1 && philo->times_has_eaten == philo->mainstruct->ammount_of_eating)
+			return (0);
+		philo_sleeping(philo, philo->philo_id);
 	}
-	return (philo_died(philo, philo[index].philo_id));
+	if (philo->dead_status != 1)
+		philo_died(philo, philo->philo_id);
+	return (0);
 }
 
 void	*initialize_data_threads(void *data)
@@ -46,6 +45,7 @@ void	*initialize_data_threads(void *data)
 	philo = data;
 	philo->ammount_forks = 1;
 	philo->time_must_eat = philo->mainstruct->time_to_die;
+	philo->times_has_eaten = 0;
 	philo->time_last_eat = 0;
 	philo->dead_status = -1;
 	philo->has_eaten_status = -1;
@@ -63,9 +63,10 @@ int	initialize_threads(t_mainstruct *m_struct)
 	if (!m_struct->philo_st)
 		return (-1);
 	pthread_mutex_init(&m_struct->mutex_lock, NULL);
+	pthread_mutex_init(&m_struct->mutex_death_lock, NULL);
 	while (index < m_struct->number_of_philo)
 	{
-		m_struct->philo_st[index].philo_id = index + 1;
+		m_struct->philo_st[index].philo_id = index;
 		m_struct->philo_st[index].mainstruct = m_struct;
 		pthread_create(&m_struct->threads[index], NULL, &initialize_data_threads, &(m_struct->philo_st[index]));
 		index++;

@@ -6,7 +6,7 @@
 /*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 13:21:05 by dhussain          #+#    #+#             */
-/*   Updated: 2023/05/02 16:55:13 by dhussain         ###   ########.fr       */
+/*   Updated: 2023/05/09 14:48:24 by dhussain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ typedef struct s_philo_st {
 	int					ammount_forks;
 	long				time_last_eat;
 	long				time_must_eat;
+	int					times_has_eaten;
 	int					dead_status;
 	int					has_eaten_status;
 	struct s_mainstruct	*mainstruct;
@@ -32,8 +33,10 @@ typedef struct s_mainstruct {
 	long				time_to_eat;
 	long				time_to_die;
 	long				time_to_sleep;
+	long				ammount_of_eating;
 	pthread_t 			*threads;
 	pthread_mutex_t		mutex_lock;
+	pthread_mutex_t		mutex_death_lock;
 	struct s_philo_st	*philo_st;
 }	t_mainstruct;
 
