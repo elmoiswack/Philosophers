@@ -6,7 +6,7 @@
 /*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 13:21:05 by dhussain          #+#    #+#             */
-/*   Updated: 2023/05/09 14:48:24 by dhussain         ###   ########.fr       */
+/*   Updated: 2023/05/10 14:56:06 by dhussain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ struct s_mainstruct;
 
 typedef struct s_philo_st {
 	int					philo_id;
+	long				start_time;
 	int					ammount_forks;
 	long				time_last_eat;
 	long				time_must_eat;
@@ -66,6 +67,7 @@ int		philo_died(t_philostatus *philo, int philo_id);
 
 //Utils
 long	get_time(void);
+void	sleeptight_function(t_philostatus *philo, long time);
 void	finishing_threads(t_philostatus *philo);
 
 #endif
