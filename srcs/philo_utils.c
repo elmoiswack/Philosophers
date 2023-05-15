@@ -6,7 +6,7 @@
 /*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 15:54:56 by dhussain          #+#    #+#             */
-/*   Updated: 2023/05/10 16:45:42 by dhussain         ###   ########.fr       */
+/*   Updated: 2023/05/15 15:52:24 by dhussain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,19 @@ void	sleeptight_function(t_philostatus *philo, long time)
 	return ;
 }
 
+void	everyone_is_dead(t_philostatus *philo)
+{
+	int	index;
+
+	index = 0;
+	while (index < philo->mainstruct->number_of_philo)
+	{
+		philo[index].dead_status = 1;
+		index++;
+	}
+	return ;
+}
+
 void	finishing_threads(t_philostatus *philo)
 {
 	int	index;
@@ -50,4 +63,11 @@ void	finishing_threads(t_philostatus *philo)
 		index++;
 	}
 	pthread_mutex_destroy(&philo->mainstruct->mutex_lock);
+	pthread_mutex_destroy(&philo->mainstruct->mutex_eating_lock);
+	pthread_mutex_destroy(&philo->mainstruct->mutex_sleeping_lock);
+	pthread_mutex_destroy(&philo->mainstruct->mutex_thinking_lock);
+	pthread_mutex_destroy(&philo->mainstruct->mutex_death_lock);
+	pthread_mutex_destroy(&philo->left_fork);
+	pthread_mutex_destroy(&philo->right_fork);
+	return ;
 }

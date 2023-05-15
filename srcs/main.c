@@ -6,7 +6,7 @@
 /*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 13:21:38 by dhussain          #+#    #+#             */
-/*   Updated: 2023/05/10 14:20:42 by dhussain         ###   ########.fr       */
+/*   Updated: 2023/05/15 15:40:45 by dhussain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	main(int argc, char *argv[])
 	if (!m_struct)
 		return (error_print(("Error\nAllocation of struct failed"), NULL));
 	filling_struct(argv, m_struct);
-	m_struct->threads = (pthread_t *)malloc(m_struct->number_of_philo * sizeof(pthread_t));
+	m_struct->threads = (pthread_t *)malloc((m_struct->number_of_philo + 1) * sizeof(pthread_t));
 	if (!m_struct->threads)
 		return (error_print(("Error\nAllocation of struct failed"), m_struct));
 	if (initialize_threads(m_struct) == -1)
