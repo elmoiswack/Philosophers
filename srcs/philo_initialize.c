@@ -6,7 +6,7 @@
 /*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:10:47 by dhussain          #+#    #+#             */
-/*   Updated: 2023/05/15 15:58:23 by dhussain         ###   ########.fr       */
+/*   Updated: 2023/05/16 15:57:30 by dhussain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int	looping_operations(t_philostatus *philo)
 		pthread_mutex_lock(&philo->mainstruct->mutex_lock);
 		philo->time_last_eat += get_time();
 		pthread_mutex_unlock(&philo->mainstruct->mutex_lock);
+		if (philo->dead_status == 1)
+			break ;
 		philo_thinking(philo, philo->philo_id);
 		if (philo->dead_status == 1)
 			break ;
@@ -45,11 +47,13 @@ int	monitoring_loop(t_philostatus *philo)
 		if ((philo[index].time_last_eat - philo[index].start_time) >= philo[index].time_must_eat)
 		{
 			pthread_mutex_lock(&philo->mainstruct->mutex_death_lock);
-			philo_died(philo, index);
+			philo_died(philo, philo->philo_id);
 			everyone_is_dead(philo);
 			pthread_mutex_unlock(&philo->mainstruct->mutex_death_lock);
 			break ;
 		}
+		if ((philo->mainstruct->ammount_of_eating != -1) && (philo->times_has_eaten == philo->mainstruct->ammount_of_eating))
+			return (1);
 		index++;
 		if (index == philo->mainstruct->number_of_philo)
 			index = 0;

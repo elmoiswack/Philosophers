@@ -6,7 +6,7 @@
 /*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 15:14:39 by dhussain          #+#    #+#             */
-/*   Updated: 2023/05/15 15:55:24 by dhussain         ###   ########.fr       */
+/*   Updated: 2023/05/16 16:00:55 by dhussain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	philo_steal_fork(t_philostatus *philo, int philo_id)
 	if (time == -1)
 		return (-1);
 	time = time - philo->start_time;
+	printf("%lu %i is taken a fork\n", time, philo_id);
 	pthread_mutex_lock(&philo->right_fork);
 	time = get_time();
 	if (time == -1)
