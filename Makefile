@@ -19,7 +19,7 @@ CFLAGS	:= -Wall -Wextra -Werror
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CC) $^ -o $(NAME)
+	$(CC) $^ -fsanitize=thread -o $(NAME)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@

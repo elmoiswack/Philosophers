@@ -6,7 +6,7 @@
 /*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 13:21:05 by dhussain          #+#    #+#             */
-/*   Updated: 2023/05/15 15:50:48 by dhussain         ###   ########.fr       */
+/*   Updated: 2023/05/19 15:54:24 by dhussain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ struct s_mainstruct;
 typedef struct s_philo_st {
 	int					philo_id;
 	long				start_time;
-	pthread_mutex_t		right_fork;
-	pthread_mutex_t		left_fork;
-	long				time_last_eat;
+	pthread_mutex_t		*right_fork;
+	pthread_mutex_t		*left_fork;
+	long				current_time;
 	long				time_must_eat;
 	int					times_has_eaten;
 	int					dead_status;
@@ -35,8 +35,10 @@ typedef struct s_mainstruct {
 	long				time_to_eat;
 	long				time_to_die;
 	long				time_to_sleep;
+	int					someone_died;
 	long				ammount_of_eating;
 	pthread_t 			*threads;
+	pthread_mutex_t		*forks;
 	pthread_mutex_t		mutex_lock;
 	pthread_mutex_t		mutex_eating_lock;
 	pthread_mutex_t		mutex_thinking_lock;
@@ -74,5 +76,6 @@ long	get_time(void);
 void	sleeptight_function(t_philostatus *philo, long time);
 void	finishing_threads(t_philostatus *philo);
 void	everyone_is_dead(t_philostatus *philo);
+void	fork_initialize(t_philostatus *philo, int index);
 
 #endif

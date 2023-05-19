@@ -6,7 +6,7 @@
 /*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 15:54:56 by dhussain          #+#    #+#             */
-/*   Updated: 2023/05/15 15:52:24 by dhussain         ###   ########.fr       */
+/*   Updated: 2023/05/19 16:50:07 by dhussain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,26 +29,24 @@ long	get_time(void)
 void	sleeptight_function(t_philostatus *philo, long time)
 {
 	long	wait_time;
-
-	wait_time = get_time() - philo->start_time;
-	while (wait_time < time)
+	(void)philo;
+	
+	usleep(time / 3);
+	wait_time = get_time() + time;
+	while (wait_time >= get_time())
 	{
-		wait_time = get_time() - philo->start_time;
-		usleep(200);
+		usleep(250);
 	}
 	return ;
 }
 
-void	everyone_is_dead(t_philostatus *philo)
+void	fork_initialize(t_philostatus *philo, int index)
 {
-	int	index;
-
-	index = 0;
-	while (index < philo->mainstruct->number_of_philo)
-	{
-		philo[index].dead_status = 1;
-		index++;
-	}
+	philo->left_fork = &(philo->mainstruct->forks[index]);
+	if ((index + 1) == philo->mainstruct->number_of_philo)
+		philo->right_fork = &(philo->mainstruct->forks[0]);
+	else
+		philo->right_fork = &(philo->mainstruct->forks[index + 1]);
 	return ;
 }
 
@@ -67,7 +65,7 @@ void	finishing_threads(t_philostatus *philo)
 	pthread_mutex_destroy(&philo->mainstruct->mutex_sleeping_lock);
 	pthread_mutex_destroy(&philo->mainstruct->mutex_thinking_lock);
 	pthread_mutex_destroy(&philo->mainstruct->mutex_death_lock);
-	pthread_mutex_destroy(&philo->left_fork);
-	pthread_mutex_destroy(&philo->right_fork);
+	pthread_mutex_destroy(philo->left_fork);
+	pthread_mutex_destroy(philo->right_fork);
 	return ;
 }
