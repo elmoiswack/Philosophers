@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dantehussain <dantehussain@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 15:54:56 by dhussain          #+#    #+#             */
-/*   Updated: 2023/05/19 16:50:07 by dhussain         ###   ########.fr       */
+/*   Updated: 2023/05/22 11:45:06 by dantehussai      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,7 @@ void	sleeptight_function(t_philostatus *philo, long time)
 	usleep(time / 3);
 	wait_time = get_time() + time;
 	while (wait_time >= get_time())
-	{
 		usleep(250);
-	}
 	return ;
 }
 
@@ -60,12 +58,20 @@ void	finishing_threads(t_philostatus *philo)
 		pthread_join(philo->mainstruct->threads[index], NULL);
 		index++;
 	}
-	pthread_mutex_destroy(&philo->mainstruct->mutex_lock);
-	pthread_mutex_destroy(&philo->mainstruct->mutex_eating_lock);
-	pthread_mutex_destroy(&philo->mainstruct->mutex_sleeping_lock);
-	pthread_mutex_destroy(&philo->mainstruct->mutex_thinking_lock);
-	pthread_mutex_destroy(&philo->mainstruct->mutex_death_lock);
-	pthread_mutex_destroy(philo->left_fork);
-	pthread_mutex_destroy(philo->right_fork);
+	delete_mutexes(philo->mainstruct);
 	return ;
+}
+
+int	printing_action(t_philostatus *philo, int philo_id, char *str)
+{
+	long	time;
+
+	pthread_mutex_lock(&philo->mainstruct->printing_lock);
+	time = get_time();
+	if (time == -1)
+		return (-1);
+	time = time - philo->start_time;
+	printf("%lu %i %s\n", time, philo_id, str);
+	pthread_mutex_unlock(&philo->mainstruct->printing_lock);
+	return (1);
 }

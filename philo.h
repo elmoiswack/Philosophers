@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dantehussain <dantehussain@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 13:21:05 by dhussain          #+#    #+#             */
-/*   Updated: 2023/05/19 15:54:24 by dhussain         ###   ########.fr       */
+/*   Updated: 2023/05/22 11:46:07 by dantehussai      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct s_mainstruct {
 	pthread_t 			*threads;
 	pthread_mutex_t		*forks;
 	pthread_mutex_t		mutex_lock;
+	pthread_mutex_t		printing_lock;
 	pthread_mutex_t		mutex_eating_lock;
 	pthread_mutex_t		mutex_thinking_lock;
 	pthread_mutex_t		mutex_sleeping_lock;
@@ -60,9 +61,13 @@ void	*my_calloc(size_t count, size_t size);
 //Error and Free functions
 int		error_print(char *str, t_mainstruct *m_struct);
 void	free_struct(t_mainstruct *m_struct);
-
+void	delete_mutexes(t_mainstruct *m_struct);
 //Thread functions
 int		initialize_threads(t_mainstruct *m_struct);
+int		initialize_mutexes(t_mainstruct *m_struct);
+void	*initialize_data_threads(void *data);
+int		monitoring_loop(t_philostatus *philo);
+int		looping_operations(t_philostatus *philo);
 
 //Philo operations
 int		philo_steal_fork(t_philostatus *philo, int philo_id);
@@ -75,7 +80,7 @@ int		philo_died(t_philostatus *philo, int philo_id);
 long	get_time(void);
 void	sleeptight_function(t_philostatus *philo, long time);
 void	finishing_threads(t_philostatus *philo);
-void	everyone_is_dead(t_philostatus *philo);
 void	fork_initialize(t_philostatus *philo, int index);
+int		printing_action(t_philostatus *philo, int philo_id, char *str);
 
 #endif

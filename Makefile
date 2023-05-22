@@ -9,6 +9,7 @@ SRC	:=	./srcs/main.c \
 		./srcs/philo_initialize.c \
 		./srcs/philo_operations.c \
 		./srcs/philo_utils.c \
+		./srcs/philo_loops.c \
 
 OBJ := $(SRC:.c=.o)
 
