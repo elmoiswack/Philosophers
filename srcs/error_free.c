@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_free.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dantehussain <dantehussain@student.42.f    +#+  +:+       +#+        */
+/*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 13:43:33 by dhussain          #+#    #+#             */
-/*   Updated: 2023/05/22 11:46:02 by dantehussai      ###   ########.fr       */
+/*   Updated: 2023/05/24 16:01:26 by dhussain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	delete_mutexes(t_mainstruct *m_struct)
 	index = 0;
 	while (index < m_struct->number_of_threads)
 	{
-		pthread_join(m_struct->threads[index], NULL);
 		pthread_mutex_destroy(m_struct->philo_st[index].left_fork);
 		pthread_mutex_destroy(m_struct->philo_st[index].right_fork);
 		index++;
@@ -44,6 +43,7 @@ void	delete_mutexes(t_mainstruct *m_struct)
 void	free_struct(t_mainstruct *m_struct)
 {
 	delete_mutexes(m_struct);
+	free(m_struct->threads);
 	free(m_struct->forks);
 	free(m_struct->philo_st);
 	free(m_struct);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dantehussain <dantehussain@student.42.f    +#+  +:+       +#+        */
+/*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 15:54:56 by dhussain          #+#    #+#             */
-/*   Updated: 2023/05/22 11:45:06 by dantehussai      ###   ########.fr       */
+/*   Updated: 2023/05/24 16:57:11 by dhussain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,10 @@ long	get_time(void)
 	return (c_time);
 }
 
-void	sleeptight_function(t_philostatus *philo, long time)
+void	sleeptight_function(long time)
 {
 	long	wait_time;
-	(void)philo;
-	
+
 	usleep(time / 3);
 	wait_time = get_time() + time;
 	while (wait_time >= get_time())
@@ -58,20 +57,23 @@ void	finishing_threads(t_philostatus *philo)
 		pthread_join(philo->mainstruct->threads[index], NULL);
 		index++;
 	}
-	delete_mutexes(philo->mainstruct);
 	return ;
 }
 
-int	printing_action(t_philostatus *philo, int philo_id, char *str)
+int	printing_action(t_philostatus *philo, int philo_id, const char *str)
 {
 	long	time;
 
 	pthread_mutex_lock(&philo->mainstruct->printing_lock);
 	time = get_time();
 	if (time == -1)
+	{
+		pthread_mutex_unlock(&philo->mainstruct->printing_lock);
 		return (-1);
-	time = time - philo->start_time;
-	printf("%lu %i %s\n", time, philo_id, str);
+	}
+	time -= philo->mainstruct->start_time;
+	if (philo->mainstruct->someone_died != 1)
+		printf("%lu %i %s\n", time, philo_id, str);
 	pthread_mutex_unlock(&philo->mainstruct->printing_lock);
 	return (1);
 }

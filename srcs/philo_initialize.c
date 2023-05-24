@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_initialize.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dantehussain <dantehussain@student.42.f    +#+  +:+       +#+        */
+/*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:10:47 by dhussain          #+#    #+#             */
-/*   Updated: 2023/05/22 11:39:26 by dantehussai      ###   ########.fr       */
+/*   Updated: 2023/05/24 16:34:55 by dhussain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	*initialize_data_threads(void *data)
 	philo = data;
 	pthread_mutex_lock(&philo->mainstruct->mutex_lock);
 	fork_initialize(philo, philo->philo_id - 1);
-	philo->start_time = get_time();
 	philo->time_must_eat = philo->mainstruct->time_to_die;
 	philo->times_has_eaten = 0;
 	philo->current_time = 0;
@@ -38,6 +37,14 @@ void	*initialize_data_threads(void *data)
 
 int	initialize_mutexes(t_mainstruct *m_struct)
 {
+	int	index;
+
+	index = 0;
+	while (index < m_struct->number_of_philo)
+	{
+		pthread_mutex_init(&(m_struct->forks[index]), NULL);
+		index++;
+	}
 	if (pthread_mutex_init(&m_struct->mutex_lock, NULL) == -1)
 		return (-1);
 	if (pthread_mutex_init(&m_struct->mutex_eating_lock, NULL) == -1)
@@ -47,6 +54,8 @@ int	initialize_mutexes(t_mainstruct *m_struct)
 	if (pthread_mutex_init(&m_struct->mutex_thinking_lock, NULL) == -1)
 		return (-1);
 	if (pthread_mutex_init(&m_struct->mutex_death_lock, NULL) == -1)
+		return (-1);
+	if (pthread_mutex_init(&m_struct->printing_lock, NULL) == -1)
 		return (-1);
 	return (1);
 }
@@ -59,12 +68,14 @@ int	initialize_threads(t_mainstruct *m_struct)
 	m_struct->philo_st = malloc(m_struct->number_of_philo * sizeof(t_philostatus));
 	if (!m_struct->philo_st)
 		return (-1);
-	if (initialize_mutexes(m_struct) == -1)
-		return (-1);
 	m_struct->forks = malloc(m_struct->number_of_philo * sizeof(pthread_mutex_t));
 	if (!m_struct->forks)
 		return (-1);
+	if (initialize_mutexes(m_struct) == -1)
+		return (-1);
 	m_struct->someone_died = -1;
+	m_struct->everyone_is_full = -1;
+	m_struct->start_time = get_time();
 	while (index < m_struct->number_of_philo)
 	{
 		m_struct->philo_st[index].philo_id = index + 1;

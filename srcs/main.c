@@ -6,7 +6,7 @@
 /*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 13:21:38 by dhussain          #+#    #+#             */
-/*   Updated: 2023/05/19 16:01:30 by dhussain         ###   ########.fr       */
+/*   Updated: 2023/05/24 16:54:48 by dhussain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,6 @@ int	main(int argc, char *argv[])
 		return (error_print(("Error\nAllocation of struct failed"), m_struct));
 	if (initialize_threads(m_struct) == -1)
 		return (error_print(("Error\nA thread failed"), m_struct));
+	free_struct(m_struct);
 	return (0);
 }
