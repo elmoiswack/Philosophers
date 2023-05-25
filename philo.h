@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dantehussain <dantehussain@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 13:21:05 by dhussain          #+#    #+#             */
-/*   Updated: 2023/05/24 16:31:12 by dhussain         ###   ########.fr       */
+/*   Updated: 2023/05/25 23:45:37 by dantehussai      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ typedef struct s_philo_st {
 	long				current_time;
 	long				time_must_eat;
 	int					times_has_eaten;
-	int					dead_status;
-	int					has_eaten_status;
 	struct s_mainstruct	*mainstruct;
 }	t_philostatus;
 
@@ -38,6 +36,7 @@ typedef struct s_mainstruct {
 	long				start_time;
 	int					everyone_is_full;
 	long				ammount_of_eating;
+	int					philo_that_full;
 	pthread_t 			*threads;
 	pthread_mutex_t		*forks;
 	pthread_mutex_t		mutex_lock;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_initialize.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dantehussain <dantehussain@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:10:47 by dhussain          #+#    #+#             */
-/*   Updated: 2023/05/24 16:34:55 by dhussain         ###   ########.fr       */
+/*   Updated: 2023/05/25 23:45:30 by dantehussai      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ void	*initialize_data_threads(void *data)
 	philo->time_must_eat = philo->mainstruct->time_to_die;
 	philo->times_has_eaten = 0;
 	philo->current_time = 0;
-	philo->dead_status = -1;
-	philo->has_eaten_status = -1;
 	pthread_mutex_unlock(&philo->mainstruct->mutex_lock);
 	if (philo->philo_id % 2 == 0)
 		usleep(250);
@@ -75,6 +73,7 @@ int	initialize_threads(t_mainstruct *m_struct)
 		return (-1);
 	m_struct->someone_died = -1;
 	m_struct->everyone_is_full = -1;
+	m_struct->philo_that_full = 0;
 	m_struct->start_time = get_time();
 	while (index < m_struct->number_of_philo)
 	{

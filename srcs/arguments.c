@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   arguments.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dantehussain <dantehussain@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 13:33:55 by dhussain          #+#    #+#             */
-/*   Updated: 2023/05/09 11:41:51 by dhussain         ###   ########.fr       */
+/*   Updated: 2023/05/25 21:28:17 by dantehussai      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 int	digit_checker(char *str)
 {
