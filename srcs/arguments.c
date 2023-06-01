@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   arguments.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dantehussain <dantehussain@student.42.f    +#+  +:+       +#+        */
+/*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 13:33:55 by dhussain          #+#    #+#             */
-/*   Updated: 2023/05/25 21:28:17 by dantehussai      ###   ########.fr       */
+/*   Updated: 2023/06/01 11:05:20 by dhussain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ int	digit_checker(char *str)
 int	overflow_check(char *arg_str)
 {
 	int		index;
-	char 	*str;
-	
+	char	*str;
+
 	index = 1;
 	if (my_strlenght(arg_str) > 10)
 		return (-1);
@@ -65,7 +65,7 @@ int	overflow_check(char *arg_str)
 int	argv_checker(char *argv[])
 {
 	int	index;
-	
+
 	index = 1;
 	while (argv[index])
 	{
@@ -95,6 +95,9 @@ int	filling_struct(char *argv[], t_mainstruct *m_struct)
 	m_struct->time_to_die = my_atoi(argv[2]);
 	m_struct->time_to_eat = my_atoi(argv[3]);
 	m_struct->time_to_sleep = my_atoi(argv[4]);
+	m_struct->someone_died = -1;
+	m_struct->everyone_is_full = -1;
+	m_struct->philo_that_full = 0;
 	if (argv[5])
 		m_struct->ammount_of_eating = my_atoi(argv[5]);
 	else

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dantehussain <dantehussain@student.42.f    +#+  +:+       +#+        */
+/*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 15:54:56 by dhussain          #+#    #+#             */
-/*   Updated: 2023/05/25 23:45:22 by dantehussai      ###   ########.fr       */
+/*   Updated: 2023/06/01 11:13:56 by dhussain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,8 @@ int	printing_action(t_philostatus *philo, int philo_id, const char *str)
 		return (-1);
 	}
 	time -= philo->mainstruct->start_time;
-	if (philo->mainstruct->someone_died != 1 && philo->mainstruct->everyone_is_full != 1)
+	if (philo->mainstruct->someone_died != 1 \
+		&& philo->mainstruct->everyone_is_full != 1)
 		printf("%lu %i %s\n", time, philo_id, str);
 	pthread_mutex_unlock(&philo->mainstruct->printing_lock);
 	return (1);

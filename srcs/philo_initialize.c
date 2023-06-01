@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_initialize.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dantehussain <dantehussain@student.42.f    +#+  +:+       +#+        */
+/*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:10:47 by dhussain          #+#    #+#             */
-/*   Updated: 2023/05/25 23:45:30 by dantehussai      ###   ########.fr       */
+/*   Updated: 2023/06/01 11:11:07 by dhussain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,28 +58,47 @@ int	initialize_mutexes(t_mainstruct *m_struct)
 	return (1);
 }
 
+int	mainstruct_variables(t_mainstruct *m_struct)
+{
+	m_struct->someone_died = -1;
+	m_struct->everyone_is_full = -1;
+	m_struct->philo_that_full = 0;
+	m_struct->start_time = get_time();
+	if (m_struct->start_time == -1)
+		return (-1);
+	return (1);
+}
+
+int	initialize_variables(t_mainstruct *m_struct)
+{
+	m_struct->philo_st = malloc(m_struct->number_of_philo \
+		* sizeof(t_philostatus));
+	if (!m_struct->philo_st)
+		return (-1);
+	m_struct->forks = malloc(m_struct->number_of_philo \
+		* sizeof(pthread_mutex_t));
+	if (!m_struct->forks)
+		return (-1);
+	if (initialize_mutexes(m_struct) == -1)
+		return (-1);
+	if (mainstruct_variables(m_struct) == -1)
+		return (-1);
+	return (1);
+}
+
 int	initialize_threads(t_mainstruct *m_struct)
 {
 	int		index;
 
 	index = 0;
-	m_struct->philo_st = malloc(m_struct->number_of_philo * sizeof(t_philostatus));
-	if (!m_struct->philo_st)
+	if (initialize_variables(m_struct) == -1)
 		return (-1);
-	m_struct->forks = malloc(m_struct->number_of_philo * sizeof(pthread_mutex_t));
-	if (!m_struct->forks)
-		return (-1);
-	if (initialize_mutexes(m_struct) == -1)
-		return (-1);
-	m_struct->someone_died = -1;
-	m_struct->everyone_is_full = -1;
-	m_struct->philo_that_full = 0;
-	m_struct->start_time = get_time();
 	while (index < m_struct->number_of_philo)
 	{
 		m_struct->philo_st[index].philo_id = index + 1;
 		m_struct->philo_st[index].mainstruct = m_struct;
-		if (pthread_create(&m_struct->threads[index], NULL, &initialize_data_threads, &(m_struct->philo_st[index])) == -1)
+		if (pthread_create(&m_struct->threads[index], NULL, \
+			&initialize_data_threads, &(m_struct->philo_st[index])) == -1)
 			return (-1);
 		index++;
 		usleep(250);
