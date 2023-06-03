@@ -6,7 +6,7 @@
 /*   By: dantehussain <dantehussain@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 13:21:05 by dhussain          #+#    #+#             */
-/*   Updated: 2023/05/25 23:45:37 by dantehussai      ###   ########.fr       */
+/*   Updated: 2023/06/03 09:30:17 by dantehussai      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int		philo_died(t_philostatus *philo, int philo_id);
 
 //Utils
 long	get_time(void);
-void	sleeptight_function(long time);
+int		sleeptight_function(long time);
 void	finishing_threads(t_philostatus *philo);
 void	fork_initialize(t_philostatus *philo, int index);
 int		printing_action(t_philostatus *philo, int philo_id, const char *str);

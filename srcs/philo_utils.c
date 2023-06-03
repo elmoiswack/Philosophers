@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dantehussain <dantehussain@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 15:54:56 by dhussain          #+#    #+#             */
-/*   Updated: 2023/06/01 11:13:56 by dhussain         ###   ########.fr       */
+/*   Updated: 2023/06/03 09:33:07 by dantehussai      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,27 @@ long	get_time(void)
 	return (c_time);
 }
 
-void	sleeptight_function(long time)
+int	sleeptight_function(long time)
 {
 	long	wait_time;
+	long	time_loop;
 
 	usleep(time / 3);
-	wait_time = get_time() + time;
-	while (wait_time >= get_time())
+	wait_time = get_time();
+	if (wait_time == -1)
+		return (-1);
+	wait_time += time;
+	time_loop = get_time();
+	if (time_loop == -1)
+		return (-1);
+	while (wait_time >= time_loop)
+	{
+		time_loop = get_time();
+		if (time_loop == -1)
+			return (-1);
 		usleep(250);
-	return ;
+	}
+	return (1);
 }
 
 void	fork_initialize(t_philostatus *philo, int index)
