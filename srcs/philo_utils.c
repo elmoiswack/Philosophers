@@ -6,7 +6,7 @@
 /*   By: dantehussain <dantehussain@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 15:54:56 by dhussain          #+#    #+#             */
-/*   Updated: 2023/06/03 09:33:07 by dantehussai      ###   ########.fr       */
+/*   Updated: 2023/07/11 16:23:11 by dantehussai      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,25 +26,25 @@ long	get_time(void)
 	return (c_time);
 }
 
-int	sleeptight_function(long time)
+int	sleeptight_function(long time, t_philostatus *philo)
 {
 	long	wait_time;
 	long	time_loop;
 
 	usleep(time / 3);
-	wait_time = get_time();
+	wait_time = get_time() - philo->mainstruct->start_time;
 	if (wait_time == -1)
 		return (-1);
 	wait_time += time;
-	time_loop = get_time();
+	time_loop = get_time() - philo->mainstruct->start_time;
 	if (time_loop == -1)
 		return (-1);
 	while (wait_time >= time_loop)
 	{
-		time_loop = get_time();
+		time_loop = get_time() - philo->mainstruct->start_time;;
 		if (time_loop == -1)
 			return (-1);
-		usleep(250);
+		usleep(200);
 	}
 	return (1);
 }

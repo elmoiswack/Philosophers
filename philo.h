@@ -6,7 +6,7 @@
 /*   By: dantehussain <dantehussain@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 13:21:05 by dhussain          #+#    #+#             */
-/*   Updated: 2023/06/03 09:30:17 by dantehussai      ###   ########.fr       */
+/*   Updated: 2023/07/11 16:23:35 by dantehussai      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ int		initialize_mutexes(t_mainstruct *m_struct);
 void	*initialize_data_threads(void *data);
 int		monitoring_loop(t_philostatus *philo);
 int		looping_operations(t_philostatus *philo);
+int		one_philo_loop(t_philostatus *philo);
 
 //Philo operations
 int		philo_steal_fork(t_philostatus *philo, int philo_id);
@@ -78,7 +79,7 @@ int		philo_died(t_philostatus *philo, int philo_id);
 
 //Utils
 long	get_time(void);
-int		sleeptight_function(long time);
+int		sleeptight_function(long time, t_philostatus *philo);
 void	finishing_threads(t_philostatus *philo);
 void	fork_initialize(t_philostatus *philo, int index);
 int		printing_action(t_philostatus *philo, int philo_id, const char *str);

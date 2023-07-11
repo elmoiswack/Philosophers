@@ -6,7 +6,7 @@
 /*   By: dantehussain <dantehussain@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 15:14:39 by dhussain          #+#    #+#             */
-/*   Updated: 2023/06/03 09:37:01 by dantehussai      ###   ########.fr       */
+/*   Updated: 2023/07/11 16:24:08 by dantehussai      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	philo_eating(t_philostatus *philo, int philo_id)
 	if (philo->mainstruct->philo_that_full \
 		== philo->mainstruct->number_of_philo)
 		philo->mainstruct->everyone_is_full = 1;
-	if (sleeptight_function(philo->mainstruct->time_to_eat) == -1)
+	if (sleeptight_function(philo->mainstruct->time_to_eat, philo) == -1)
 	{
 		pthread_mutex_unlock(&philo->mainstruct->mutex_eating_lock);
 		return (-1);
@@ -87,7 +87,7 @@ int	philo_sleeping(t_philostatus *philo, int philo_id)
 		pthread_mutex_unlock(&philo->mainstruct->mutex_sleeping_lock);
 		return (-1);
 	}
-	if (sleeptight_function(philo->mainstruct->time_to_sleep) == -1)
+	if (sleeptight_function(philo->mainstruct->time_to_sleep, philo) == -1)
 	{
 		pthread_mutex_unlock(&philo->mainstruct->mutex_sleeping_lock);
 		return (-1);

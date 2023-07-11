@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_loops.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dantehussain <dantehussain@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 11:29:12 by dantehussai       #+#    #+#             */
-/*   Updated: 2023/06/01 11:12:36 by dhussain         ###   ########.fr       */
+/*   Updated: 2023/07/11 16:19:35 by dantehussai      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,17 @@ int	looping_operations(t_philostatus *philo)
 		if (philo->current_time == -1)
 			return (-1);
 		if ((philo->mainstruct->someone_died == 1) \
-			&& (philo->mainstruct->everyone_is_full == 1))
+			|| (philo->mainstruct->everyone_is_full == 1))
 			break ;
 		if (philo_thinking(philo, philo->philo_id) == -1)
 			return (-1);
 		if ((philo->mainstruct->someone_died == 1) \
-			&& (philo->mainstruct->everyone_is_full == 1))
+			|| (philo->mainstruct->everyone_is_full == 1))
 			break ;
 		if (philo_steal_fork(philo, philo->philo_id) == -1)
 			return (-1);
 		if ((philo->mainstruct->someone_died == 1) \
-			&& (philo->mainstruct->everyone_is_full == 1))
+			|| (philo->mainstruct->everyone_is_full == 1))
 			break ;
 		if (philo_sleeping(philo, philo->philo_id) == -1)
 			return (-1);
@@ -62,6 +62,26 @@ int	monitoring_loop(t_philostatus *philo)
 		index++;
 		if (index == philo->mainstruct->number_of_philo)
 			index = 0;
+	}
+	return (1);
+}
+
+int	one_philo_loop(t_philostatus *philo)
+{
+	int	boolean;
+
+	boolean = 1;
+	while (philo->current_time < philo->time_must_eat)
+	{
+		philo->current_time = (get_time() - philo->mainstruct->start_time);
+		if (boolean == 1)
+		{
+			if (philo_thinking(philo, philo->philo_id) == -1)
+				return (-1);
+			if (printing_action(philo, philo->philo_id, "has taken a fork") == -1)
+				return (-1);
+			boolean = -1;
+		}
 	}
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: dantehussain <dantehussain@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:10:47 by dhussain          #+#    #+#             */
-/*   Updated: 2023/06/03 09:45:31 by dantehussai      ###   ########.fr       */
+/*   Updated: 2023/07/11 16:07:51 by dantehussai      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,10 @@ void	*initialize_data_threads(void *data)
 	pthread_mutex_unlock(&philo->mainstruct->mutex_lock);
 	if (philo->philo_id % 2 == 0)
 		usleep(250);
-	looping_operations(philo);
+	if (philo->mainstruct->number_of_philo == 1)
+		one_philo_loop(philo);
+	else	
+		looping_operations(philo);
 	finishing_threads(philo);
 	return (NULL);
 }
