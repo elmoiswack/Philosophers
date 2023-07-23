@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_operations.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dantehussain <dantehussain@student.42.f    +#+  +:+       +#+        */
+/*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 15:14:39 by dhussain          #+#    #+#             */
-/*   Updated: 2023/07/11 16:24:08 by dantehussai      ###   ########.fr       */
+/*   Updated: 2023/07/23 14:19:30 by dhussain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,9 @@
 int	philo_steal_fork(t_philostatus *philo, int philo_id)
 {
 	pthread_mutex_lock(philo->left_fork);
-	if (printing_action(philo, philo_id, "has taken a fork") == -1)
-	{
-		pthread_mutex_unlock(philo->left_fork);
-		return (-1);
-	}
+	printing_action(philo, philo_id, "has taken a fork");
 	pthread_mutex_lock(philo->right_fork);
-	if (printing_action(philo, philo_id, "has taken a fork") == -1)
-	{
-		pthread_mutex_unlock(philo->left_fork);
-		pthread_mutex_unlock(philo->right_fork);
-		return (-1);
-	}
+	printing_action(philo, philo_id, "has taken a fork");
 	philo->current_time = (get_time() - philo->mainstruct->start_time);
 	if (philo_eating(philo, philo_id) == -1)
 	{
@@ -49,31 +40,19 @@ int	philo_eating(t_philostatus *philo, int philo_id)
 	philo->times_has_eaten += 1;
 	if (philo->times_has_eaten == philo->mainstruct->ammount_of_eating)
 		philo->mainstruct->philo_that_full += 1;
-	if (printing_action(philo, philo_id, "is eating") == -1)
-	{
-		pthread_mutex_unlock(&philo->mainstruct->mutex_eating_lock);
-		return (-1);
-	}
+	printing_action(philo, philo_id, "is eating");
 	if (philo->mainstruct->philo_that_full \
 		== philo->mainstruct->number_of_philo)
 		philo->mainstruct->everyone_is_full = 1;
-	if (sleeptight_function(philo->mainstruct->time_to_eat, philo) == -1)
-	{
-		pthread_mutex_unlock(&philo->mainstruct->mutex_eating_lock);
-		return (-1);
-	}
 	pthread_mutex_unlock(&philo->mainstruct->mutex_eating_lock);
+	sleeptight_function(philo->mainstruct->time_to_eat, philo);
 	return (1);
 }
 
 int	philo_thinking(t_philostatus *philo, int philo_id)
 {
 	pthread_mutex_lock(&philo->mainstruct->mutex_thinking_lock);
-	if (printing_action(philo, philo_id, "is thinking") == -1)
-	{
-		pthread_mutex_unlock(&philo->mainstruct->mutex_thinking_lock);
-		return (-1);
-	}
+	printing_action(philo, philo_id, "is thinking");
 	philo->current_time = (get_time() - philo->mainstruct->start_time);
 	pthread_mutex_unlock(&philo->mainstruct->mutex_thinking_lock);
 	return (1);
@@ -82,18 +61,10 @@ int	philo_thinking(t_philostatus *philo, int philo_id)
 int	philo_sleeping(t_philostatus *philo, int philo_id)
 {
 	pthread_mutex_lock(&philo->mainstruct->mutex_sleeping_lock);
-	if (printing_action(philo, philo_id, "is sleeping") == -1)
-	{
-		pthread_mutex_unlock(&philo->mainstruct->mutex_sleeping_lock);
-		return (-1);
-	}
-	if (sleeptight_function(philo->mainstruct->time_to_sleep, philo) == -1)
-	{
-		pthread_mutex_unlock(&philo->mainstruct->mutex_sleeping_lock);
-		return (-1);
-	}
+	printing_action(philo, philo_id, "is sleeping");
 	philo->current_time = (get_time() - philo->mainstruct->start_time);
 	pthread_mutex_unlock(&philo->mainstruct->mutex_sleeping_lock);
+	sleeptight_function(philo->mainstruct->time_to_sleep, philo);
 	return (1);
 }
 
@@ -103,11 +74,6 @@ int	philo_died(t_philostatus *philo, int philo_id)
 
 	pthread_mutex_lock(&philo->mainstruct->mutex_death_lock);
 	time = get_time();
-	if (time == -1)
-	{
-		pthread_mutex_unlock(&philo->mainstruct->mutex_death_lock);
-		return (-1);
-	}
 	time -= philo->mainstruct->start_time;
 	printf("%lu %i is dead\n", time, philo_id);
 	pthread_mutex_unlock(&philo->mainstruct->mutex_death_lock);

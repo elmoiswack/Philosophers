@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dantehussain <dantehussain@student.42.f    +#+  +:+       +#+        */
+/*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 15:54:56 by dhussain          #+#    #+#             */
-/*   Updated: 2023/07/11 16:23:11 by dantehussai      ###   ########.fr       */
+/*   Updated: 2023/07/23 14:25:02 by dhussain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@ long	get_time(void)
 	struct timeval	current_time;
 	long			c_time;
 
-	if (gettimeofday(&current_time, NULL) == -1)
-		return (-1);
+	gettimeofday(&current_time, NULL);
 	c_time = (current_time.tv_sec * 1000) + (current_time.tv_usec / 1000);
 	return (c_time);
 }
@@ -33,14 +32,15 @@ int	sleeptight_function(long time, t_philostatus *philo)
 
 	usleep(time / 3);
 	wait_time = get_time() - philo->mainstruct->start_time;
-	if (wait_time == -1)
-		return (-1);
 	wait_time += time;
 	time_loop = get_time() - philo->mainstruct->start_time;
-	if (time_loop == -1)
-		return (-1);
 	while (wait_time >= time_loop)
 	{
+		if (philo->current_time >= philo->time_must_eat)
+		{
+			philo->mainstruct->someone_died = 1;
+			break ;
+		}
 		time_loop = get_time() - philo->mainstruct->start_time;;
 		if (time_loop == -1)
 			return (-1);
@@ -78,11 +78,6 @@ int	printing_action(t_philostatus *philo, int philo_id, const char *str)
 
 	pthread_mutex_lock(&philo->mainstruct->printing_lock);
 	time = get_time();
-	if (time == -1)
-	{
-		pthread_mutex_unlock(&philo->mainstruct->printing_lock);
-		return (-1);
-	}
 	time -= philo->mainstruct->start_time;
 	if (philo->mainstruct->someone_died != 1 \
 		&& philo->mainstruct->everyone_is_full != 1)
