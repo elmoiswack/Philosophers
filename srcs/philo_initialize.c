@@ -6,7 +6,7 @@
 /*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:10:47 by dhussain          #+#    #+#             */
-/*   Updated: 2023/07/23 14:26:46 by dhussain         ###   ########.fr       */
+/*   Updated: 2023/07/23 17:30:49 by dhussain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ void	*initialize_data_threads(void *data)
 	philo->times_has_eaten = 0;
 	philo->current_time = 0;
 	pthread_mutex_unlock(&philo->mainstruct->mutex_lock);
-	if (philo->philo_id % 2 == 0)
-		usleep(250);
 	if (philo->mainstruct->number_of_philo == 1)
 		one_philo_loop(philo);
 	else
