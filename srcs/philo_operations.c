@@ -6,7 +6,7 @@
 /*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 15:14:39 by dhussain          #+#    #+#             */
-/*   Updated: 2023/07/23 14:19:30 by dhussain         ###   ########.fr       */
+/*   Updated: 2023/07/23 14:27:07 by dhussain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	philo_steal_fork(t_philostatus *philo, int philo_id)
 }
 
 int	philo_eating(t_philostatus *philo, int philo_id)
-{	
+{
 	pthread_mutex_lock(&philo->mainstruct->mutex_eating_lock);
 	philo->current_time = (get_time() - philo->mainstruct->start_time);
 	philo->time_must_eat = philo->current_time + philo->mainstruct->time_to_die;

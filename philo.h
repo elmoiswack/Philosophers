@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dantehussain <dantehussain@student.42.f    +#+  +:+       +#+        */
+/*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 13:21:05 by dhussain          #+#    #+#             */
-/*   Updated: 2023/07/11 16:23:35 by dantehussai      ###   ########.fr       */
+/*   Updated: 2023/07/23 14:27:52 by dhussain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define PHILO_H
 # include <pthread.h>
 
-struct s_mainstruct;
+struct	s_mainstruct;
 
 typedef struct s_philo_st {
 	int					philo_id;
@@ -37,7 +37,7 @@ typedef struct s_mainstruct {
 	int					everyone_is_full;
 	long				ammount_of_eating;
 	int					philo_that_full;
-	pthread_t 			*threads;
+	pthread_t			*threads;
 	pthread_mutex_t		*forks;
 	pthread_mutex_t		mutex_lock;
 	pthread_mutex_t		printing_lock;

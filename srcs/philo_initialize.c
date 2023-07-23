@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_initialize.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dantehussain <dantehussain@student.42.f    +#+  +:+       +#+        */
+/*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:10:47 by dhussain          #+#    #+#             */
-/*   Updated: 2023/07/11 16:07:51 by dantehussai      ###   ########.fr       */
+/*   Updated: 2023/07/23 14:26:46 by dhussain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	*initialize_data_threads(void *data)
 		usleep(250);
 	if (philo->mainstruct->number_of_philo == 1)
 		one_philo_loop(philo);
-	else	
+	else
 		looping_operations(philo);
 	finishing_threads(philo);
 	return (NULL);

@@ -6,7 +6,7 @@
 /*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 15:54:56 by dhussain          #+#    #+#             */
-/*   Updated: 2023/07/23 14:25:02 by dhussain         ###   ########.fr       */
+/*   Updated: 2023/07/23 14:27:20 by dhussain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	sleeptight_function(long time, t_philostatus *philo)
 			philo->mainstruct->someone_died = 1;
 			break ;
 		}
-		time_loop = get_time() - philo->mainstruct->start_time;;
+		time_loop = get_time() - philo->mainstruct->start_time;
 		if (time_loop == -1)
 			return (-1);
 		usleep(200);
