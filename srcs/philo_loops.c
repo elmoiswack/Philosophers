@@ -6,7 +6,7 @@
 /*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 11:29:12 by dantehussai       #+#    #+#             */
-/*   Updated: 2023/07/23 14:26:54 by dhussain         ###   ########.fr       */
+/*   Updated: 2023/07/26 11:16:47 by dhussain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,24 @@ int	looping_operations(t_philostatus *philo)
 	pthread_mutex_unlock(&philo->mainstruct->mutex_lock);
 	while (1)
 	{
+		pthread_mutex_lock(&philo->mainstruct->mutex_lock);
 		philo->current_time = (get_time() - philo->mainstruct->start_time);
 		if ((philo->mainstruct->someone_died == 1) \
 			|| (philo->mainstruct->everyone_is_full == 1))
 			break ;
+		pthread_mutex_unlock(&philo->mainstruct->mutex_lock);
 		philo_thinking(philo, philo->philo_id);
+		pthread_mutex_lock(&philo->mainstruct->mutex_lock);
 		if ((philo->mainstruct->someone_died == 1) \
 			|| (philo->mainstruct->everyone_is_full == 1))
 			break ;
+		pthread_mutex_unlock(&philo->mainstruct->mutex_lock);
 		philo_steal_fork(philo, philo->philo_id);
+		pthread_mutex_lock(&philo->mainstruct->mutex_lock);
 		if ((philo->mainstruct->someone_died == 1) \
 			|| (philo->mainstruct->everyone_is_full == 1))
 			break ;
+		pthread_mutex_unlock(&philo->mainstruct->mutex_lock);
 		philo_sleeping(philo, philo->philo_id);
 	}
 	return (0);
@@ -45,14 +51,19 @@ int	monitoring_loop(t_philostatus *philo)
 	index = 0;
 	while (1)
 	{
+		pthread_mutex_lock(&philo->mainstruct->mutex_lock);
 		if (philo[index].current_time >= philo[index].time_must_eat)
 		{
+			pthread_mutex_lock(&philo->mainstruct->mutex_death_lock);
 			philo->mainstruct->someone_died = 1;
+			pthread_mutex_unlock(&philo->mainstruct->mutex_death_lock);
 			philo_died(philo, philo[index].philo_id);
+			pthread_mutex_unlock(&philo->mainstruct->mutex_lock);
 			break ;
 		}
 		if (philo->mainstruct->everyone_is_full == 1)
 			break ;
+		pthread_mutex_unlock(&philo->mainstruct->mutex_lock);
 		index++;
 		if (index == philo->mainstruct->number_of_philo)
 			index = 0;

@@ -6,7 +6,7 @@
 /*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:10:47 by dhussain          #+#    #+#             */
-/*   Updated: 2023/07/23 17:30:49 by dhussain         ###   ########.fr       */
+/*   Updated: 2023/07/26 11:00:51 by dhussain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,11 @@ int	initialize_threads(t_mainstruct *m_struct)
 		m_struct->philo_st[index].philo_id = index + 1;
 		m_struct->philo_st[index].mainstruct = m_struct;
 		if (pthread_create(&m_struct->threads[index], NULL, \
-			&initialize_data_threads, &(m_struct->philo_st[index])) == -1)
+			&initialize_data_threads, &(m_struct->philo_st[index])) != 0)
+		{
+			finishing_threads(m_struct->philo_st);
 			return (-1);
+		}
 		index++;
 		usleep(250);
 	}

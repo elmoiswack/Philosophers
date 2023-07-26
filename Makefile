@@ -13,7 +13,7 @@ SRC	:=	./srcs/main.c \
 
 OBJ := $(SRC:.c=.o)
 
-CC	:=	gcc
+CC	:=	gcc #-g -fsanitize=thread
 
 CFLAGS	:= -Wall -Wextra -Werror
 
