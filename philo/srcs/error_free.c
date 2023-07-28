@@ -6,7 +6,7 @@
 /*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 13:43:33 by dhussain          #+#    #+#             */
-/*   Updated: 2023/07/23 14:16:35 by dhussain         ###   ########.fr       */
+/*   Updated: 2023/07/28 15:47:29 by dhussain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	delete_mutexes(t_mainstruct *m_struct)
 	int	index;
 
 	index = 0;
-	while (index < m_struct->number_of_threads)
+	while (index < m_struct->number_of_philo)
 	{
 		pthread_mutex_destroy(m_struct->philo_st[index].left_fork);
 		pthread_mutex_destroy(m_struct->philo_st[index].right_fork);

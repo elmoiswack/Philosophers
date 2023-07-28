@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_loops.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dantehussain <dantehussain@student.42.f    +#+  +:+       +#+        */
+/*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 11:29:12 by dantehussai       #+#    #+#             */
-/*   Updated: 2023/07/28 07:02:52 by dantehussai      ###   ########.fr       */
+/*   Updated: 2023/07/28 16:55:32 by dhussain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,33 +19,12 @@ int	looping_operations(t_philostatus *philo)
 {
 	while (1)
 	{
-		pthread_mutex_lock(&philo->mainstruct->mutex_lock);
-		if ((philo->mainstruct->someone_died == 1) \
-			|| (philo->mainstruct->everyone_is_full == 1))
-		{
-			pthread_mutex_unlock(&philo->mainstruct->mutex_lock);
+		if (philo_thinking(philo, philo->philo_id) == -1)
 			break ;
-		}
-		pthread_mutex_unlock(&philo->mainstruct->mutex_lock);
-		philo_thinking(philo, philo->philo_id);
-		pthread_mutex_lock(&philo->mainstruct->mutex_lock);
-		if ((philo->mainstruct->someone_died == 1) \
-			|| (philo->mainstruct->everyone_is_full == 1))
-		{
-			pthread_mutex_unlock(&philo->mainstruct->mutex_lock);
+		if (philo_steal_fork(philo, philo->philo_id) == -1)
 			break ;
-		}
-		pthread_mutex_unlock(&philo->mainstruct->mutex_lock);
-		philo_steal_fork(philo, philo->philo_id);
-		pthread_mutex_lock(&philo->mainstruct->mutex_lock);
-		if ((philo->mainstruct->someone_died == 1) \
-			|| (philo->mainstruct->everyone_is_full == 1))
-		{
-			pthread_mutex_unlock(&philo->mainstruct->mutex_lock);
+		if (philo_sleeping(philo, philo->philo_id) == -1)
 			break ;
-		}
-		pthread_mutex_unlock(&philo->mainstruct->mutex_lock);
-		philo_sleeping(philo, philo->philo_id);
 	}
 	return (0);
 }
@@ -64,8 +43,8 @@ int	monitoring_loop(t_philostatus *philo)
 			pthread_mutex_lock(&philo->mainstruct->mutex_death_lock);
 			philo->mainstruct->someone_died = 1;
 			pthread_mutex_unlock(&philo->mainstruct->mutex_death_lock);
-			philo_died(philo, philo[index].philo_id);
 			pthread_mutex_unlock(&philo->mainstruct->mutex_lock);
+			philo_died(philo, philo[index].philo_id);
 			break ;
 		}
 		if (philo->mainstruct->everyone_is_full == 1)
@@ -85,9 +64,6 @@ int	one_philo_loop(t_philostatus *philo)
 	boolean = 1;
 	while (philo->current_time < philo->time_must_eat)
 	{
-		pthread_mutex_lock(&philo->mainstruct->mutex_lock);
-		philo->current_time = (get_time() - philo->start_time);
-		pthread_mutex_unlock(&philo->mainstruct->mutex_lock);
 		if (boolean == 1)
 		{
 			philo_thinking(philo, philo->philo_id);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dantehussain <dantehussain@student.42.f    +#+  +:+       +#+        */
+/*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 15:54:56 by dhussain          #+#    #+#             */
-/*   Updated: 2023/07/28 06:57:08 by dantehussai      ###   ########.fr       */
+/*   Updated: 2023/07/28 16:14:13 by dhussain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,14 @@ int	sleeptight_function(long time, t_philostatus *philo)
 	time_loop = get_time() - philo->start_time;
 	while (wait_time >= time_loop)
 	{
+		pthread_mutex_lock(&philo->mainstruct->mutex_lock);
 		if (time_loop >= philo->time_must_eat)
 		{
-			pthread_mutex_lock(&philo->mainstruct->mutex_death_lock);
 			philo->mainstruct->someone_died = 1;
-			pthread_mutex_unlock(&philo->mainstruct->mutex_death_lock);
+			pthread_mutex_unlock(&philo->mainstruct->mutex_lock);
 			break ;
 		}
+		pthread_mutex_unlock(&philo->mainstruct->mutex_lock);
 		time_loop = get_time() - philo->start_time;
 		usleep(200);
 	}
@@ -61,7 +62,7 @@ void	fork_initialize(t_philostatus *philo, int index)
 
 void	finishing_threads(t_philostatus *philo, int index)
 {
-	while (index < philo->mainstruct->number_of_threads)
+	while (index <  philo->mainstruct->number_of_philo)
 	{
 		pthread_join(philo->mainstruct->threads[index], NULL);
 		index++;

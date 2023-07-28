@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dantehussain <dantehussain@student.42.f    +#+  +:+       +#+        */
+/*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 13:21:05 by dhussain          #+#    #+#             */
-/*   Updated: 2023/07/28 06:41:23 by dantehussai      ###   ########.fr       */
+/*   Updated: 2023/07/28 15:51:28 by dhussain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ typedef struct s_philo_st {
 
 typedef struct s_mainstruct {
 	int					number_of_philo;
-	int					number_of_threads;
 	long				time_to_eat;
 	long				time_to_die;
 	long				time_to_sleep;

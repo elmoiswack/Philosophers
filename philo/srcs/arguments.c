@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   arguments.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dantehussain <dantehussain@student.42.f    +#+  +:+       +#+        */
+/*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 13:33:55 by dhussain          #+#    #+#             */
-/*   Updated: 2023/07/28 05:49:06 by dantehussai      ###   ########.fr       */
+/*   Updated: 2023/07/28 15:47:38 by dhussain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ int	arg_checker(int argc, char *argv[])
 int	filling_struct(char *argv[], t_mainstruct *m_struct)
 {
 	m_struct->number_of_philo = my_atoi(argv[1]);
-	m_struct->number_of_threads = my_atoi(argv[1]);
 	m_struct->time_to_die = my_atoi(argv[2]);
 	m_struct->time_to_eat = my_atoi(argv[3]);
 	m_struct->time_to_sleep = my_atoi(argv[4]);
