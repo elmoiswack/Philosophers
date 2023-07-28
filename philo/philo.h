@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dantehussain <dantehussain@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 13:21:05 by dhussain          #+#    #+#             */
-/*   Updated: 2023/07/23 14:27:52 by dhussain         ###   ########.fr       */
+/*   Updated: 2023/07/28 06:41:23 by dantehussai      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ typedef struct s_philo_st {
 	pthread_mutex_t		*right_fork;
 	pthread_mutex_t		*left_fork;
 	long				current_time;
+	long				start_time;
 	long				time_must_eat;
 	int					times_has_eaten;
 	struct s_mainstruct	*mainstruct;
@@ -33,7 +34,6 @@ typedef struct s_mainstruct {
 	long				time_to_die;
 	long				time_to_sleep;
 	int					someone_died;
-	long				start_time;
 	int					everyone_is_full;
 	long				ammount_of_eating;
 	int					philo_that_full;
@@ -80,7 +80,7 @@ int		philo_died(t_philostatus *philo, int philo_id);
 //Utils
 long	get_time(void);
 int		sleeptight_function(long time, t_philostatus *philo);
-void	finishing_threads(t_philostatus *philo);
+void	finishing_threads(t_philostatus *philo, int index);
 void	fork_initialize(t_philostatus *philo, int index);
 int		printing_action(t_philostatus *philo, int philo_id, const char *str);
 
