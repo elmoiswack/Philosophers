@@ -6,7 +6,7 @@
 /*   By: dantehussain <dantehussain@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 15:54:56 by dhussain          #+#    #+#             */
-/*   Updated: 2023/07/28 06:42:03 by dantehussai      ###   ########.fr       */
+/*   Updated: 2023/07/28 06:57:08 by dantehussai      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,13 +76,10 @@ int	printing_action(t_philostatus *philo, int philo_id, const char *str)
 	pthread_mutex_lock(&philo->mainstruct->printing_lock);
 	pthread_mutex_lock(&philo->mainstruct->mutex_lock);
 	time = get_time() - philo->start_time;
-	if (time >= philo->time_must_eat)
+	if (philo->mainstruct->someone_died == 1)
 	{
-		pthread_mutex_lock(&philo->mainstruct->mutex_death_lock);
-		philo->mainstruct->someone_died = 1;
-		pthread_mutex_unlock(&philo->mainstruct->mutex_death_lock);
-		pthread_mutex_unlock(&philo->mainstruct->printing_lock);
 		pthread_mutex_unlock(&philo->mainstruct->mutex_lock);
+		pthread_mutex_unlock(&philo->mainstruct->printing_lock);
 		return (0);
 	}
 	if (philo->mainstruct->someone_died != 1 \

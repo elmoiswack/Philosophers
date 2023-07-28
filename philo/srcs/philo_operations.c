@@ -6,7 +6,7 @@
 /*   By: dantehussain <dantehussain@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 15:14:39 by dhussain          #+#    #+#             */
-/*   Updated: 2023/07/28 06:47:46 by dantehussai      ###   ########.fr       */
+/*   Updated: 2023/07/28 07:03:16 by dantehussai      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,8 @@
 int	philo_steal_fork(t_philostatus *philo, int philo_id)
 {
 	pthread_mutex_lock(&philo->mainstruct->mutex_lock);
-	philo->current_time = (get_time() - philo->start_time);
-	if (philo->current_time >= philo->time_must_eat)
+	if (philo->mainstruct->someone_died == 1)
 	{
-		pthread_mutex_lock(&philo->mainstruct->mutex_death_lock);
-		philo->mainstruct->someone_died = 1;
-		pthread_mutex_unlock(&philo->mainstruct->mutex_death_lock);
 		pthread_mutex_unlock(&philo->mainstruct->mutex_lock);
 		return (0);
 	}
@@ -40,12 +36,8 @@ int	philo_steal_fork(t_philostatus *philo, int philo_id)
 int	philo_eating(t_philostatus *philo, int philo_id)
 {
 	pthread_mutex_lock(&philo->mainstruct->mutex_lock);
-	philo->current_time = (get_time() - philo->start_time);
-	if (philo->current_time >= philo->time_must_eat)
+	if (philo->mainstruct->someone_died == 1)
 	{
-		pthread_mutex_lock(&philo->mainstruct->mutex_death_lock);
-		philo->mainstruct->someone_died = 1;
-		pthread_mutex_unlock(&philo->mainstruct->mutex_death_lock);
 		pthread_mutex_unlock(&philo->mainstruct->mutex_lock);
 		return (0);
 	}
@@ -71,12 +63,8 @@ int	philo_eating(t_philostatus *philo, int philo_id)
 int	philo_thinking(t_philostatus *philo, int philo_id)
 {
 	pthread_mutex_lock(&philo->mainstruct->mutex_lock);
-	philo->current_time = (get_time() - philo->start_time);
-	if (philo->current_time >= philo->time_must_eat)
+	if (philo->mainstruct->someone_died == 1)
 	{
-		pthread_mutex_lock(&philo->mainstruct->mutex_death_lock);
-		philo->mainstruct->someone_died = 1;
-		pthread_mutex_unlock(&philo->mainstruct->mutex_death_lock);
 		pthread_mutex_unlock(&philo->mainstruct->mutex_lock);
 		return (0);
 	}
@@ -90,12 +78,8 @@ int	philo_thinking(t_philostatus *philo, int philo_id)
 int	philo_sleeping(t_philostatus *philo, int philo_id)
 {
 	pthread_mutex_lock(&philo->mainstruct->mutex_lock);
-	philo->current_time = (get_time() - philo->start_time);
-	if (philo->current_time >= philo->time_must_eat)
+	if (philo->mainstruct->someone_died == 1)
 	{
-		pthread_mutex_lock(&philo->mainstruct->mutex_death_lock);
-		philo->mainstruct->someone_died = 1;
-		pthread_mutex_unlock(&philo->mainstruct->mutex_death_lock);
 		pthread_mutex_unlock(&philo->mainstruct->mutex_lock);
 		return (0);
 	}

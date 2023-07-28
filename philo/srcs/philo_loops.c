@@ -6,7 +6,7 @@
 /*   By: dantehussain <dantehussain@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 11:29:12 by dantehussai       #+#    #+#             */
-/*   Updated: 2023/07/28 06:43:21 by dantehussai      ###   ########.fr       */
+/*   Updated: 2023/07/28 07:02:52 by dantehussai      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ int	looping_operations(t_philostatus *philo)
 	while (1)
 	{
 		pthread_mutex_lock(&philo->mainstruct->mutex_lock);
-		philo->current_time = (get_time() - philo->start_time);
 		if ((philo->mainstruct->someone_died == 1) \
 			|| (philo->mainstruct->everyone_is_full == 1))
 		{
@@ -59,6 +58,7 @@ int	monitoring_loop(t_philostatus *philo)
 	while (1)
 	{
 		pthread_mutex_lock(&philo->mainstruct->mutex_lock);
+		philo[index].current_time = get_time() - philo[index].start_time;
 		if (philo[index].current_time >= philo[index].time_must_eat)
 		{
 			pthread_mutex_lock(&philo->mainstruct->mutex_death_lock);
