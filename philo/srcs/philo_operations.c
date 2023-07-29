@@ -6,7 +6,7 @@
 /*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 15:14:39 by dhussain          #+#    #+#             */
-/*   Updated: 2023/07/28 16:13:08 by dhussain         ###   ########.fr       */
+/*   Updated: 2023/07/29 19:05:19 by dhussain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	philo_steal_fork(t_philostatus *philo, int philo_id)
 	int	check;
 
 	pthread_mutex_lock(&philo->mainstruct->mutex_lock);
-	if (philo->mainstruct->someone_died == 1)
+	if (philo->mainstruct->someone_died == 1 || philo->mainstruct->everyone_is_full == 1)
 	{
 		pthread_mutex_unlock(&philo->mainstruct->mutex_lock);
 		return (-1);
@@ -38,7 +38,7 @@ int	philo_steal_fork(t_philostatus *philo, int philo_id)
 int	philo_eating(t_philostatus *philo, int philo_id)
 {
 	pthread_mutex_lock(&philo->mainstruct->mutex_lock);
-	if (philo->mainstruct->someone_died == 1)
+	if (philo->mainstruct->someone_died == 1 || philo->mainstruct->everyone_is_full == 1)
 	{
 		pthread_mutex_unlock(&philo->mainstruct->mutex_lock);
 		return (-1);
@@ -65,7 +65,7 @@ int	philo_eating(t_philostatus *philo, int philo_id)
 int	philo_thinking(t_philostatus *philo, int philo_id)
 {
 	pthread_mutex_lock(&philo->mainstruct->mutex_lock);
-	if (philo->mainstruct->someone_died == 1)
+	if (philo->mainstruct->someone_died == 1 || philo->mainstruct->everyone_is_full == 1)
 	{
 		pthread_mutex_unlock(&philo->mainstruct->mutex_lock);
 		return (-1);
@@ -80,7 +80,7 @@ int	philo_thinking(t_philostatus *philo, int philo_id)
 int	philo_sleeping(t_philostatus *philo, int philo_id)
 {
 	pthread_mutex_lock(&philo->mainstruct->mutex_lock);
-	if (philo->mainstruct->someone_died == 1)
+	if (philo->mainstruct->someone_died == 1 || philo->mainstruct->everyone_is_full == 1)
 	{
 		pthread_mutex_unlock(&philo->mainstruct->mutex_lock);
 		return (-1);
@@ -98,7 +98,7 @@ int	philo_died(t_philostatus *philo, int philo_id)
 	long	time;
 
 	pthread_mutex_lock(&philo->mainstruct->mutex_death_lock);
-	time = get_time() - philo->start_time;
+	time = get_time() - philo->mainstruct->start_time;
 	printf("%lu %i is dead\n", time, philo_id);
 	pthread_mutex_unlock(&philo->mainstruct->mutex_death_lock);
 	return (1);

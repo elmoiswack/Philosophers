@@ -6,7 +6,7 @@
 /*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 13:21:05 by dhussain          #+#    #+#             */
-/*   Updated: 2023/07/28 15:51:28 by dhussain         ###   ########.fr       */
+/*   Updated: 2023/07/29 19:01:22 by dhussain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ typedef struct s_philo_st {
 	pthread_mutex_t		*right_fork;
 	pthread_mutex_t		*left_fork;
 	long				current_time;
-	long				start_time;
 	long				time_must_eat;
 	int					times_has_eaten;
 	struct s_mainstruct	*mainstruct;
@@ -29,6 +28,7 @@ typedef struct s_philo_st {
 
 typedef struct s_mainstruct {
 	int					number_of_philo;
+	long				start_time;
 	long				time_to_eat;
 	long				time_to_die;
 	long				time_to_sleep;

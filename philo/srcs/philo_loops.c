@@ -6,7 +6,7 @@
 /*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 11:29:12 by dantehussai       #+#    #+#             */
-/*   Updated: 2023/07/28 16:55:32 by dhussain         ###   ########.fr       */
+/*   Updated: 2023/07/29 19:07:31 by dhussain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,10 @@ int	monitoring_loop(t_philostatus *philo)
 	while (1)
 	{
 		pthread_mutex_lock(&philo->mainstruct->mutex_lock);
-		philo[index].current_time = get_time() - philo[index].start_time;
-		if (philo[index].current_time >= philo[index].time_must_eat)
+		philo[index].current_time = get_time() - philo->mainstruct->start_time;
+		if (philo[index].current_time > philo[index].time_must_eat)
 		{
-			pthread_mutex_lock(&philo->mainstruct->mutex_death_lock);
 			philo->mainstruct->someone_died = 1;
-			pthread_mutex_unlock(&philo->mainstruct->mutex_death_lock);
 			pthread_mutex_unlock(&philo->mainstruct->mutex_lock);
 			philo_died(philo, philo[index].philo_id);
 			break ;
@@ -60,10 +58,17 @@ int	monitoring_loop(t_philostatus *philo)
 int	one_philo_loop(t_philostatus *philo)
 {
 	int	boolean;
-
+	int	time;
+	int	time_wait;
+	
+	time = get_time() - philo->mainstruct->start_time;
+	pthread_mutex_lock(&philo->mainstruct->mutex_lock);
+	time_wait = philo->time_must_eat;
+	pthread_mutex_unlock(&philo->mainstruct->mutex_lock);
 	boolean = 1;
-	while (philo->current_time < philo->time_must_eat)
+	while (time < time_wait)
 	{
+		time = get_time() - philo->mainstruct->start_time;
 		if (boolean == 1)
 		{
 			philo_thinking(philo, philo->philo_id);
