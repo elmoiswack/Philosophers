@@ -6,7 +6,7 @@
 /*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 13:21:05 by dhussain          #+#    #+#             */
-/*   Updated: 2023/07/29 19:01:22 by dhussain         ###   ########.fr       */
+/*   Updated: 2023/07/31 16:38:56 by dhussain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ typedef struct s_philo_st {
 	int					philo_id;
 	pthread_mutex_t		*right_fork;
 	pthread_mutex_t		*left_fork;
+	pthread_mutex_t		mutex_must_eating;
 	long				current_time;
 	long				time_must_eat;
 	int					times_has_eaten;
@@ -29,20 +30,18 @@ typedef struct s_philo_st {
 typedef struct s_mainstruct {
 	int					number_of_philo;
 	long				start_time;
-	long				time_to_eat;
-	long				time_to_die;
-	long				time_to_sleep;
+	int					time_to_eat;
+	int					time_to_die;
+	int					time_to_sleep;
+	int					ammount_of_eating;
 	int					someone_died;
 	int					everyone_is_full;
-	long				ammount_of_eating;
 	int					philo_that_full;
+	int					thread_failed;
 	pthread_t			*threads;
 	pthread_mutex_t		*forks;
 	pthread_mutex_t		mutex_lock;
 	pthread_mutex_t		printing_lock;
-	pthread_mutex_t		mutex_eating_lock;
-	pthread_mutex_t		mutex_thinking_lock;
-	pthread_mutex_t		mutex_sleeping_lock;
 	pthread_mutex_t		mutex_death_lock;
 	struct s_philo_st	*philo_st;
 }	t_mainstruct;

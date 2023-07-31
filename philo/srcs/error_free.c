@@ -6,7 +6,7 @@
 /*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 13:43:33 by dhussain          #+#    #+#             */
-/*   Updated: 2023/07/29 18:54:58 by dhussain         ###   ########.fr       */
+/*   Updated: 2023/07/31 15:52:43 by dhussain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,10 @@ void	delete_mutexes(t_mainstruct *m_struct)
 	{
 		pthread_mutex_destroy(m_struct->philo_st[index].left_fork);
 		pthread_mutex_destroy(m_struct->philo_st[index].right_fork);
+		pthread_mutex_destroy(&m_struct->philo_st[index].mutex_must_eating);
 		index++;
 	}
 	pthread_mutex_destroy(&m_struct->mutex_lock);
-	pthread_mutex_destroy(&m_struct->mutex_eating_lock);
-	pthread_mutex_destroy(&m_struct->mutex_sleeping_lock);
-	pthread_mutex_destroy(&m_struct->mutex_thinking_lock);
 	pthread_mutex_destroy(&m_struct->mutex_death_lock);
 	pthread_mutex_destroy(&m_struct->printing_lock);
 }
