@@ -6,7 +6,7 @@
 /*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 15:14:39 by dhussain          #+#    #+#             */
-/*   Updated: 2023/08/01 18:09:59 by dhussain         ###   ########.fr       */
+/*   Updated: 2023/08/01 18:27:55 by dhussain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	philo_steal_fork(t_philostatus *philo, int philo_id)
 		pthread_mutex_unlock(philo->right_fork);
 		return (-1);
 	}
-	check =	philo_eating(philo, philo_id);
+	check = philo_eating(philo, philo_id);
 	pthread_mutex_unlock(philo->left_fork);
 	pthread_mutex_unlock(philo->right_fork);
 	return (check);
@@ -42,7 +42,8 @@ int	philo_eating(t_philostatus *philo, int philo_id)
 	if (printing_action(philo, philo_id, "is eating") == -1)
 		return (-1);
 	pthread_mutex_lock(&philo->mutex_must_eating);
-	philo->time_must_eat = (get_time() - philo->mainstruct->start_time) + philo->mainstruct->time_to_die;
+	philo->time_must_eat = (get_time() - philo->mainstruct->start_time) \
+		+ philo->mainstruct->time_to_die;
 	philo->times_has_eaten += 1;
 	pthread_mutex_lock(&philo->mainstruct->mutex_lock);
 	if (philo->times_has_eaten == philo->mainstruct->ammount_of_eating)

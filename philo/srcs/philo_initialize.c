@@ -6,7 +6,7 @@
 /*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:10:47 by dhussain          #+#    #+#             */
-/*   Updated: 2023/08/01 17:51:14 by dhussain         ###   ########.fr       */
+/*   Updated: 2023/08/01 18:25:06 by dhussain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ int	initialize_mutexes(t_mainstruct *m_struct)
 	{
 		if (pthread_mutex_init(&(m_struct->forks[index]), NULL) == -1)
 			return (-1);
-		if (pthread_mutex_init(&m_struct->philo_st[index].mutex_must_eating, NULL) == -1)
+		if (pthread_mutex_init(&m_struct->philo_st[index].mutex_must_eating, \
+			NULL) == -1)
 			return (-1);
 		index++;
 	}

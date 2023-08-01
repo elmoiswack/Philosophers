@@ -6,7 +6,7 @@
 /*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 15:54:56 by dhussain          #+#    #+#             */
-/*   Updated: 2023/07/31 16:50:58 by dhussain         ###   ########.fr       */
+/*   Updated: 2023/08/01 18:28:18 by dhussain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	finishing_threads(t_philostatus *philo, int index)
 	index_x = 0;
 	if (index == 0)
 	{
-		while (index <  philo->mainstruct->number_of_philo)
+		while (index < philo->mainstruct->number_of_philo)
 		{
 			pthread_join(philo->mainstruct->threads[index], NULL);
 			index++;
@@ -71,7 +71,7 @@ void	finishing_threads(t_philostatus *philo, int index)
 		{
 			pthread_join(philo->mainstruct->threads[index], NULL);
 			index_x++;
-		}		
+		}
 	}
 	return ;
 }

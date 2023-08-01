@@ -6,7 +6,7 @@
 /*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 11:29:12 by dantehussai       #+#    #+#             */
-/*   Updated: 2023/08/01 18:11:03 by dhussain         ###   ########.fr       */
+/*   Updated: 2023/08/01 18:31:08 by dhussain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,20 @@ int	looping_operations(t_philostatus *philo)
 	return (0);
 }
 
+int	philo_that_full_check(t_philostatus *philo)
+{
+	pthread_mutex_lock(&philo->mainstruct->mutex_lock);
+	if (philo->mainstruct->philo_that_full \
+		== philo->mainstruct->number_of_philo)
+	{
+		philo->mainstruct->everyone_is_full = 1;
+		pthread_mutex_unlock(&philo->mainstruct->mutex_lock);
+		return (1);
+	}
+	pthread_mutex_unlock(&philo->mainstruct->mutex_lock);
+	return (-1);
+}
+
 int	monitoring_loop_philo(t_philostatus *philo, int index)
 {
 	while (index < philo->mainstruct->number_of_philo)
@@ -47,14 +61,8 @@ int	monitoring_loop_philo(t_philostatus *philo, int index)
 			return (-1);
 		}
 		pthread_mutex_unlock(&philo[index].mutex_must_eating);
-		pthread_mutex_lock(&philo->mainstruct->mutex_lock);
-		if (philo->mainstruct->philo_that_full == philo->mainstruct->number_of_philo)
-		{
-			philo->mainstruct->everyone_is_full = 1;
-			pthread_mutex_unlock(&philo->mainstruct->mutex_lock);
+		if (philo_that_full_check(philo) == 1)
 			return (-1);
-		}
-		pthread_mutex_unlock(&philo->mainstruct->mutex_lock);
 		index++;
 	}
 	return (0);
@@ -81,7 +89,7 @@ int	one_philo_loop(t_philostatus *philo)
 	int		boolean;
 	long	time;
 	long	time_wait;
-	
+
 	time = get_time() - philo->mainstruct->start_time;
 	pthread_mutex_lock(&philo->mainstruct->mutex_lock);
 	time_wait = philo->time_must_eat;
