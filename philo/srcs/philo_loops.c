@@ -6,7 +6,7 @@
 /*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 11:29:12 by dantehussai       #+#    #+#             */
-/*   Updated: 2023/07/31 17:10:59 by dhussain         ###   ########.fr       */
+/*   Updated: 2023/08/01 18:11:03 by dhussain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,15 +46,15 @@ int	monitoring_loop_philo(t_philostatus *philo, int index)
 			philo_died(philo, philo[index].philo_id);
 			return (-1);
 		}
+		pthread_mutex_unlock(&philo[index].mutex_must_eating);
+		pthread_mutex_lock(&philo->mainstruct->mutex_lock);
 		if (philo->mainstruct->philo_that_full == philo->mainstruct->number_of_philo)
 		{
-			pthread_mutex_lock(&philo->mainstruct->mutex_lock);
 			philo->mainstruct->everyone_is_full = 1;
 			pthread_mutex_unlock(&philo->mainstruct->mutex_lock);
-			pthread_mutex_unlock(&philo[index].mutex_must_eating);
 			return (-1);
 		}
-		pthread_mutex_unlock(&philo[index].mutex_must_eating);
+		pthread_mutex_unlock(&philo->mainstruct->mutex_lock);
 		index++;
 	}
 	return (0);

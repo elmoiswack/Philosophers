@@ -6,7 +6,7 @@
 /*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 15:14:39 by dhussain          #+#    #+#             */
-/*   Updated: 2023/07/31 16:04:09 by dhussain         ###   ########.fr       */
+/*   Updated: 2023/08/01 18:09:59 by dhussain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,10 @@ int	philo_eating(t_philostatus *philo, int philo_id)
 	pthread_mutex_lock(&philo->mutex_must_eating);
 	philo->time_must_eat = (get_time() - philo->mainstruct->start_time) + philo->mainstruct->time_to_die;
 	philo->times_has_eaten += 1;
+	pthread_mutex_lock(&philo->mainstruct->mutex_lock);
 	if (philo->times_has_eaten == philo->mainstruct->ammount_of_eating)
 		philo->mainstruct->philo_that_full += 1;
+	pthread_mutex_unlock(&philo->mainstruct->mutex_lock);
 	pthread_mutex_unlock(&philo->mutex_must_eating);
 	sleeptight_function(philo->mainstruct->time_to_eat, philo);
 	return (1);
