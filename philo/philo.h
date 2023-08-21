@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dantehussain <dantehussain@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 13:21:05 by dhussain          #+#    #+#             */
-/*   Updated: 2023/08/01 17:51:08 by dhussain         ###   ########.fr       */
+/*   Updated: 2023/08/21 05:45:04 by dantehussai      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ typedef struct s_philo_st {
 	int					philo_id;
 	pthread_mutex_t		*right_fork;
 	pthread_mutex_t		*left_fork;
-	pthread_mutex_t		mutex_must_eating;
+	pthread_mutex_t		mutex_eating;
 	long				current_time;
 	long				time_must_eat;
 	int					times_has_eaten;
@@ -63,8 +63,8 @@ void	delete_mutexes(t_mainstruct *m_struct);
 //Thread functions
 int		initialize_threads(t_mainstruct *m_struct);
 int		initialize_mutexes(t_mainstruct *m_struct);
-void	*initialize_data_threads(void *data);
-int		monitoring_loop(t_philostatus *philo);
+void	*which_thread_loop(void	*data);
+void	monitoring_loop(t_philostatus *philo);
 int		looping_operations(t_philostatus *philo);
 int		one_philo_loop(t_philostatus *philo);
 
@@ -79,7 +79,7 @@ int		philo_died(t_philostatus *philo, int philo_id);
 long	get_time(void);
 int		sleeptight_function(long time, t_philostatus *philo);
 void	finishing_threads(t_philostatus *philo, int index);
-void	fork_initialize(t_philostatus *philo, int index);
+void	fork_initialize(t_mainstruct *m_struct);
 int		printing_action(t_philostatus *philo, int philo_id, const char *str);
 
 #endif

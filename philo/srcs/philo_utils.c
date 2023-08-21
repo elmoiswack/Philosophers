@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dantehussain <dantehussain@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 15:54:56 by dhussain          #+#    #+#             */
-/*   Updated: 2023/08/01 18:28:18 by dhussain         ###   ########.fr       */
+/*   Updated: 2023/08/21 05:22:42 by dantehussai      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,20 @@ int	sleeptight_function(long time, t_philostatus *philo)
 	return (1);
 }
 
-void	fork_initialize(t_philostatus *philo, int index)
+void	fork_initialize(t_mainstruct *m_struct)
 {
-	philo->left_fork = &(philo->mainstruct->forks[index]);
-	if ((index + 1) == philo->mainstruct->number_of_philo)
-		philo->right_fork = &(philo->mainstruct->forks[0]);
-	else
-		philo->right_fork = &(philo->mainstruct->forks[index + 1]);
+	int	index;
+
+	index = 0;
+	while (index < m_struct->number_of_philo)
+	{
+		m_struct->philo_st[index].left_fork = &(m_struct->forks[index]);
+		if ((index + 1) == m_struct->number_of_philo)
+			m_struct->philo_st[index].right_fork = &(m_struct->forks[0]);
+		else
+			m_struct->philo_st[index].right_fork = &(m_struct->forks[index + 1]);
+		index++;
+	}
 	return ;
 }
 

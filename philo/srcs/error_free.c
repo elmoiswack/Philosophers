@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_free.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dantehussain <dantehussain@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 13:43:33 by dhussain          #+#    #+#             */
-/*   Updated: 2023/08/01 17:51:05 by dhussain         ###   ########.fr       */
+/*   Updated: 2023/08/21 05:40:53 by dantehussai      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	delete_mutexes(t_mainstruct *m_struct)
 	{
 		pthread_mutex_destroy(m_struct->philo_st[index].left_fork);
 		pthread_mutex_destroy(m_struct->philo_st[index].right_fork);
-		pthread_mutex_destroy(&m_struct->philo_st[index].mutex_must_eating);
+		pthread_mutex_destroy(&m_struct->philo_st[index].mutex_eating);
 		index++;
 	}
 	pthread_mutex_destroy(&m_struct->mutex_lock);
