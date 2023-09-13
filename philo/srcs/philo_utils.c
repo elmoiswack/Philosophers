@@ -42,23 +42,6 @@ int	sleeptight_function(long time, t_philostatus *philo)
 	return (1);
 }
 
-void	fork_initialize(t_mainstruct *m_struct)
-{
-	int	index;
-
-	index = 0;
-	while (index < m_struct->number_of_philo)
-	{
-		m_struct->philo_st[index].left_fork = &(m_struct->forks[index]);
-		if ((index + 1) == m_struct->number_of_philo)
-			m_struct->philo_st[index].right_fork = &(m_struct->forks[0]);
-		else
-			m_struct->philo_st[index].right_fork = &(m_struct->forks[index + 1]);
-		index++;
-	}
-	return ;
-}
-
 void	finishing_threads(t_philostatus *philo, int index)
 {
 	int	index_x;
@@ -87,7 +70,6 @@ int	printing_action(t_philostatus *philo, int philo_id, const char *str)
 {
 	long	time;
 
-	time = get_time() - philo->mainstruct->start_time;
 	pthread_mutex_lock(&philo->mainstruct->mutex_lock);
 	if (philo->mainstruct->someone_died == 1 \
 		|| philo->mainstruct->everyone_is_full == 1)
@@ -97,6 +79,7 @@ int	printing_action(t_philostatus *philo, int philo_id, const char *str)
 	}
 	pthread_mutex_unlock(&philo->mainstruct->mutex_lock);
 	pthread_mutex_lock(&philo->mainstruct->printing_lock);
+	time = get_time() - philo->mainstruct->start_time;
 	printf("%lu %i %s\n", time, philo_id, str);
 	pthread_mutex_unlock(&philo->mainstruct->printing_lock);
 	return (1);

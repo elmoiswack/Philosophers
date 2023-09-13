@@ -53,7 +53,6 @@ int		filling_struct(char *argv[], t_mainstruct *m_struct);
 int		my_atoi(char *str);
 int		my_strlenght(char *str);
 char	*my_strcpy(char *dest, const char *src);
-int		my_is_digit(int c);
 void	*my_calloc(size_t count, size_t size);
 
 //Error and Free functions
@@ -67,6 +66,7 @@ void	*which_thread_loop(void	*data);
 void	monitoring_loop(t_philostatus *philo);
 int		looping_operations(t_philostatus *philo);
 int		one_philo_loop(t_philostatus *philo);
+void	fork_initialize(t_mainstruct *m_struct);
 
 //Philo operations
 int		philo_steal_fork(t_philostatus *philo, int philo_id);
@@ -79,7 +79,6 @@ int		philo_died(t_philostatus *philo, int philo_id);
 long	get_time(void);
 int		sleeptight_function(long time, t_philostatus *philo);
 void	finishing_threads(t_philostatus *philo, int index);
-void	fork_initialize(t_mainstruct *m_struct);
 int		printing_action(t_philostatus *philo, int philo_id, const char *str);
 
 #endif

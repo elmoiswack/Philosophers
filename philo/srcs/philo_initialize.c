@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_initialize.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dantehussain <dantehussain@student.42.f    +#+  +:+       +#+        */
+/*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:10:47 by dhussain          #+#    #+#             */
-/*   Updated: 2023/08/21 05:40:53 by dantehussai      ###   ########.fr       */
+/*   Updated: 2023/09/13 13:25:01 by dhussain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,27 @@ int	initialize_mutexes(t_mainstruct *m_struct)
 	return (1);
 }
 
+void	fork_initialize(t_mainstruct *m_struct)
+{
+	int	index;
+
+	index = 0;
+	while (index < m_struct->number_of_philo)
+	{
+		m_struct->philo_st[index].left_fork = &(m_struct->forks[index]);
+		if ((index + 1) == m_struct->number_of_philo)
+			m_struct->philo_st[index].right_fork = &(m_struct->forks[0]);
+		else
+			m_struct->philo_st[index].right_fork = \
+				&(m_struct->forks[index + 1]);
+		index++;
+	}
+	return ;
+}
+
 void	initialize_data_threads(t_mainstruct *m_struct)
 {
-	int index;
+	int	index;
 
 	index = 0;
 	while (index < m_struct->number_of_philo)
