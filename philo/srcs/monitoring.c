@@ -6,7 +6,7 @@
 /*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 15:54:56 by dhussain          #+#    #+#             */
-/*   Updated: 2023/09/13 13:25:54 by dhussain         ###   ########.fr       */
+/*   Updated: 2023/09/20 16:36:47 by dhussain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	monitoring_loop(t_philostatus *philo)
 	{
 		if (monitoring_loop_philo(philo, 0) == 1)
 			return ;
-		usleep(250 * 1000);
+		usleep(350 * 1000);
 	}
 	return ;
 }
