@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dantehussain <dantehussain@student.42.f    +#+  +:+       +#+        */
+/*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 13:21:05 by dhussain          #+#    #+#             */
-/*   Updated: 2023/08/21 05:45:04 by dantehussai      ###   ########.fr       */
+/*   Updated: 2023/09/28 14:01:00 by dhussain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,8 @@ int		initialize_threads(t_mainstruct *m_struct);
 int		initialize_mutexes(t_mainstruct *m_struct);
 void	*which_thread_loop(void	*data);
 void	monitoring_loop(t_philostatus *philo);
-int		looping_operations(t_philostatus *philo);
+int		looping_operations_even(t_philostatus *philo);
+int		looping_operations_uneven(t_philostatus *philo);
 int		one_philo_loop(t_philostatus *philo);
 void	fork_initialize(t_mainstruct *m_struct);
 
