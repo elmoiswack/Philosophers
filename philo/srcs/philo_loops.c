@@ -6,7 +6,7 @@
 /*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 11:29:12 by dantehussai       #+#    #+#             */
-/*   Updated: 2023/09/13 13:25:17 by dhussain         ###   ########.fr       */
+/*   Updated: 2023/09/28 13:56:16 by dhussain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,34 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
+
+int	looping_operations_uneven(t_philostatus *philo)
+{
+	while (1)
+	{
+		if (philo_sleeping(philo, philo->philo_id) == -1)
+			break ;
+		if (philo_thinking(philo, philo->philo_id) == -1)
+			break ;
+		if (philo_steal_fork(philo, philo->philo_id) == -1)
+			break ;
+	}
+	return (0);
+}
+
+int	looping_operations_even(t_philostatus *philo)
+{
+	while (1)
+	{
+		if (philo_thinking(philo, philo->philo_id) == -1)
+			break ;
+		if (philo_steal_fork(philo, philo->philo_id) == -1)
+			break ;
+		if (philo_sleeping(philo, philo->philo_id) == -1)
+			break ;
+	}
+	return (0);
+}
 
 void	*which_thread_loop(void	*data)
 {
@@ -30,24 +58,13 @@ void	*which_thread_loop(void	*data)
 	if (philo->mainstruct->number_of_philo == 1)
 		one_philo_loop(philo);
 	else
-		looping_operations(philo);
-	return (NULL);
-}
-
-int	looping_operations(t_philostatus *philo)
-{
-	if (philo->philo_id % 2 == 0)
-		usleep(250);
-	while (1)
 	{
-		if (philo_thinking(philo, philo->philo_id) == -1)
-			break ;
-		if (philo_steal_fork(philo, philo->philo_id) == -1)
-			break ;
-		if (philo_sleeping(philo, philo->philo_id) == -1)
-			break ;
+		if (philo->philo_id % 2 == 0)
+			looping_operations_even(philo);
+		else
+			looping_operations_uneven(philo);
 	}
-	return (0);
+	return (NULL);
 }
 
 int	one_philo_loop(t_philostatus *philo)

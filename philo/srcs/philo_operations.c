@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_operations.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dantehussain <dantehussain@student.42.f    +#+  +:+       +#+        */
+/*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 15:14:39 by dhussain          #+#    #+#             */
-/*   Updated: 2023/08/21 05:40:53 by dantehussai      ###   ########.fr       */
+/*   Updated: 2023/09/28 13:57:51 by dhussain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,26 @@ int	philo_steal_fork(t_philostatus *philo, int philo_id)
 {
 	int	check;
 
-	pthread_mutex_lock(philo->left_fork);
-	printing_action(philo, philo_id, "has taken a fork");
-	pthread_mutex_lock(philo->right_fork);
-	printing_action(philo, philo_id, "has taken a fork");
-	check = philo_eating(philo, philo_id);
-	pthread_mutex_unlock(philo->left_fork);
-	pthread_mutex_unlock(philo->right_fork);
+	if (philo->philo_id == philo->mainstruct->number_of_philo)
+	{
+		pthread_mutex_lock(philo->right_fork);
+		printing_action(philo, philo_id, "has taken a fork");
+		pthread_mutex_lock(philo->left_fork);
+		printing_action(philo, philo_id, "has taken a fork");
+		check = philo_eating(philo, philo_id);
+		pthread_mutex_unlock(philo->left_fork);
+		pthread_mutex_unlock(philo->right_fork);
+	}
+	else
+	{
+		pthread_mutex_lock(philo->left_fork);
+		printing_action(philo, philo_id, "has taken a fork");
+		pthread_mutex_lock(philo->right_fork);
+		printing_action(philo, philo_id, "has taken a fork");
+		check = philo_eating(philo, philo_id);
+		pthread_mutex_unlock(philo->right_fork);
+		pthread_mutex_unlock(philo->left_fork);
+	}
 	return (check);
 }
 
