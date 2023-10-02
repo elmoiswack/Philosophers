@@ -6,7 +6,7 @@
 /*   By: dhussain <dhussain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 15:54:56 by dhussain          #+#    #+#             */
-/*   Updated: 2023/09/20 16:36:47 by dhussain         ###   ########.fr       */
+/*   Updated: 2023/10/02 13:15:08 by dhussain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,27 @@
 #include <stdio.h>
 #include <unistd.h>
 
-int	philo_that_full_check(t_philostatus *philo)
+int	check_if_everyone_full(t_philostatus *philo)
 {
-	pthread_mutex_lock(&philo->mainstruct->mutex_lock);
-	if (philo->mainstruct->philo_that_full \
-		== philo->mainstruct->number_of_philo)
+	int	index;
+	int	count;
+
+	index = 0;
+	count = 0;
+	while (index < philo->mainstruct->number_of_philo)
+	{
+		pthread_mutex_lock(&philo[index].mutex_eating);
+		if (philo[index].times_has_eaten >= \
+			philo->mainstruct->ammount_of_eating)
+			count += 1;
+		pthread_mutex_unlock(&philo[index].mutex_eating);
+		index++;
+	}
+	if (count == philo->mainstruct->number_of_philo)
 	{
 		philo->mainstruct->everyone_is_full = 1;
-		pthread_mutex_unlock(&philo->mainstruct->mutex_lock);
 		return (1);
 	}
-	pthread_mutex_unlock(&philo->mainstruct->mutex_lock);
 	return (-1);
 }
 
@@ -44,14 +54,15 @@ int	monitoring_loop_philo(t_philostatus *philo, int index)
 			philo_died(philo, philo[index].philo_id);
 			return (1);
 		}
-		pthread_mutex_lock(&philo->mainstruct->mutex_lock);
-		if (philo[index].times_has_eaten == \
-			philo->mainstruct->ammount_of_eating)
-			philo->mainstruct->philo_that_full += 1;
-		pthread_mutex_unlock(&philo->mainstruct->mutex_lock);
 		pthread_mutex_unlock(&philo[index].mutex_eating);
-		if (philo_that_full_check(philo) == 1)
+		pthread_mutex_lock(&philo->mainstruct->mutex_lock);
+		if (philo->mainstruct->ammount_of_eating != -1 \
+			&& check_if_everyone_full(philo) == 1)
+		{
+			pthread_mutex_unlock(&philo->mainstruct->mutex_lock);
 			return (1);
+		}
+		pthread_mutex_unlock(&philo->mainstruct->mutex_lock);
 		index++;
 	}
 	return (0);
